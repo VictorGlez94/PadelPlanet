@@ -16,7 +16,7 @@ const SearchBar = ({ onSearchChange }) => {
         endAdornment: (
           <InputAdornment position="end">
             <IconButton>
-              <SearchIcon />
+              <SearchIcon sx={{backgroundColor: "#CCFF00", padding: '8px', borderRadius: '15px'}}/>
             </IconButton>
           </InputAdornment>
         ),
