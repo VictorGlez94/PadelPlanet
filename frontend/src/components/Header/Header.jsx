@@ -1,30 +1,77 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
+import * as React from "react";
+import { Link } from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
+import { styled } from "@mui/system";
 
-const pages = ['Publicar'];
-const settings = ['Perfil', 'Account', 'Dashboard', 'Cerrar sesión'];
+const IconStyle = {
+  color: "#CCFF00",
+  bgcolor: "transparent",
+};
 
-function ResponsiveAppBar() {
+const addButtonStyle = {
+  my: 2,
+  color: "#04233A",
+  display: "flex",
+  alignItems: "center",
+  fontWeight: "bold",
+  textTransform: "capitalize",
+  padding: "6px 15px",
+  backgroundColor: "#CCFF00",
+  "&:hover": {
+    backgroundColor: "#e9ff60",
+  },
+};
+
+const StyledMenu = styled(Menu)({
+  ".MuiMenu-list": {
+    paddingTop: 0,
+    paddingBottom: 0,
+    border: "2px solid #04233A",
+  },
+});
+
+const pages = [
+  <Tooltip title="Productos Vendidos" key="store-tooltip">
+    <IconButton>
+      <StorefrontOutlinedIcon sx={IconStyle} />
+    </IconButton>
+  </Tooltip>,
+  <Tooltip title="Mis favoritos" key="favorite-tooltip">
+    <IconButton>
+      <FavoriteBorderOutlinedIcon sx={IconStyle} />
+    </IconButton>
+  </Tooltip>,
+  <Button key="add-product-button" sx={addButtonStyle}>
+    <DriveFolderUploadOutlinedIcon sx={{ mr: 0.5 }} />
+    Añadir Producto
+  </Button>,
+];
+
+const settings = [
+  "Perfil",
+  "Mis Favoritos",
+  "Productos vendidos",
+  "Cerrar sesión",
+];
+
+function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -32,67 +79,64 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#04233A'}} >
+    <AppBar position="static" sx={{ backgroundColor: "#04233A", marginBottom: '40px' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'flex' }, mr: 1 }} />
-          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end', mr: 3 }}>
-            {pages.map((page) => (
-              <Button
-              key={page}
-              onClick={handleCloseNavMenu}
-              sx={{ 
-                my: 2, 
-                color: '#04233A', 
-                display: 'flex', 
-                alignItems: 'center',
-                fontWeight: 'bold', 
-                backgroundColor: '#CCFF00', 
-                '&:hover': {
-                  backgroundColor: '#e9ff60'
-                }  
-              }}
-            >
-              {page === 'Publicar' && (
-                <DriveFolderUploadOutlinedIcon sx={{ mr: 0.5 }}/>
-              )}
-              {page} 
-            </Button>
+          <Link to="/">
+            <img
+              src="src/assets/images/logo.png"
+              alt="Logo"
+              style={{ maxWidth: 250 }}
+            />
+          </Link>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "flex-end",
+              mr: 2,
+            }}
+          >
+            {pages.map((page, index) => (
+              <Button key={index}>{page}</Button>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar />
+            </IconButton>
+            <StyledMenu
+              sx={{ mt: "55px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={handleCloseUserMenu}
+                  sx={{ backgroundColor: "#e4ff7c", color: "#04233A" }}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
+            </StyledMenu>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
-export default ResponsiveAppBar;
+
+export default Header;

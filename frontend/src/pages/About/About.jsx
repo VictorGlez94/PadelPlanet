@@ -1,9 +1,11 @@
+import './About.css'
+
+
 function About() {
   return (
-    <div>
-      
-    </div>
+    <h1>Sobre Nosotros</h1>
   )
 }
 
 export default About
+
