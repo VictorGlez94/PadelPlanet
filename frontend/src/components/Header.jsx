@@ -44,16 +44,20 @@ const StyledMenu = styled(Menu)({
 });
 
 const pages = [
+  <Link to="/perfil/ventas" key="sales-link">
   <Tooltip title="Productos Vendidos" key="store-tooltip">
     <IconButton>
       <StorefrontOutlinedIcon sx={IconStyle} />
     </IconButton>
-  </Tooltip>,
-  <Tooltip title="Mis favoritos" key="favorite-tooltip">
-    <IconButton>
-      <FavoriteBorderOutlinedIcon sx={IconStyle} />
-    </IconButton>
-  </Tooltip>,
+  </Tooltip>
+  </Link>,
+  <Link to="/perfil/favoritos" key="favorite-link">
+    <Tooltip title="Mis favoritos" key="favorite-tooltip">
+      <IconButton>
+        <FavoriteBorderOutlinedIcon sx={IconStyle} />
+      </IconButton>
+    </Tooltip>
+  </Link>,
   <Button key="add-product-button" sx={addButtonStyle}>
     <DriveFolderUploadOutlinedIcon sx={{ mr: 0.5 }} />
     Añadir Producto
@@ -79,7 +83,10 @@ function Header() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#04233A", marginBottom: '40px' }}>
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: "#04233A", marginBottom: "40px" }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to="/">

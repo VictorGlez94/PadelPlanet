@@ -7,6 +7,8 @@ import Contact from "../pages/Contact/Contact";
 import Signup from "../pages/Signup/Signup";
 import Profile from "../pages/Profile/Profile";
 import NotFound from "../pages/NotFound/NotFound";
+import Favorites from "../pages/Favorites/Favorites";
+import Sales from "../pages/Sales/Sales";
 
 
 const router = createBrowserRouter([
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: '/perfil',
         element: <Profile /> 
+      },
+      {
+        path: '/perfil/favoritos',
+        element: < Favorites /> 
+      },
+      {
+        path: '/perfil/ventas',
+        element: < Sales /> 
       },
       {
         path: "*",

@@ -1,5 +1,3 @@
-import './Login.css'
-
 
 function Login() {
   return (
@@ -10,3 +8,4 @@ function Login() {
 }
 
 export default Login
+
