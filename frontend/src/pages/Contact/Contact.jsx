@@ -17,7 +17,7 @@ const TextFieldStyled = styled(TextField)(() => ({
 const Contact = () => {
   return (
     <>
-      <h1>Contáctanos</h1>
+      <h1 style={{ textAlign: 'center' }}>Contáctanos</h1>
       <Form
         noValidate
         autoComplete="off"
