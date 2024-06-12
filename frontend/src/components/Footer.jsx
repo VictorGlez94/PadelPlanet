@@ -104,14 +104,13 @@ function Footer() {
         </Container>
       </Box>
       <Box
-        textAlign={"center"}
-        py={2}
+        py={1}
         m={0}
         bgcolor="#CCFF00"
         color={"#04233A"}
         fontWeight={"bold"}
       >
-        <Typography>© PadelPlanet 2024 - All Rights Reserved</Typography>
+        <Typography sx={{textAlign:"center"}}>© PadelPlanet 2024</Typography>
       </Box>
     </footer>
   );

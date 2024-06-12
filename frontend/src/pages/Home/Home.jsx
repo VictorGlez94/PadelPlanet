@@ -8,7 +8,7 @@ function Home() {
 
   return (
     <Container className="home-container">
-        <h1>¿Qué estás buscando?</h1>
+        <h1>¿Qué quieres encontrar?</h1>
         <SearchBar onSearchChange={setSearchTerm} />
     </Container>
   );

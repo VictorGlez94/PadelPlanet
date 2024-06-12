@@ -45,11 +45,11 @@ const StyledMenu = styled(Menu)({
 
 const pages = [
   <Link to="/perfil/ventas" key="sales-link">
-  <Tooltip title="Productos Vendidos" key="store-tooltip">
-    <IconButton>
-      <StorefrontOutlinedIcon sx={IconStyle} />
-    </IconButton>
-  </Tooltip>
+    <Tooltip title="Productos Vendidos" key="store-tooltip">
+      <IconButton>
+        <StorefrontOutlinedIcon sx={IconStyle} />
+      </IconButton>
+    </Tooltip>
   </Link>,
   <Link to="/perfil/favoritos" key="favorite-link">
     <Tooltip title="Mis favoritos" key="favorite-tooltip">
@@ -111,7 +111,7 @@ function Header() {
 
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar />
+              <Avatar sx={{bgcolor: "#04233A", color: '#CCFF00'}} />
             </IconButton>
             <StyledMenu
               sx={{ mt: "55px" }}

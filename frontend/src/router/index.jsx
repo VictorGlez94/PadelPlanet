@@ -9,6 +9,9 @@ import Profile from "../pages/Profile/Profile";
 import NotFound from "../pages/NotFound/NotFound";
 import Favorites from "../pages/Favorites/Favorites";
 import Sales from "../pages/Sales/Sales";
+import PrivacyPolicy from "../pages/Privacy/Privacy";
+import CookiesPolicy from "../pages/Cookies/Cookies";
+import Legal from "../pages/Legal/Legal";
 
 
 const router = createBrowserRouter([
@@ -27,6 +30,18 @@ const router = createBrowserRouter([
       {
         path: '/contacto',
         element: <Contact />
+      },
+      {
+        path: '/privacidad',
+        element: <PrivacyPolicy />
+      },
+      {
+        path: '/cookies',
+        element: <CookiesPolicy />
+      },
+      {
+        path: '/aviso-legal',
+        element: <Legal />
       },
       {
         path: '/login',
