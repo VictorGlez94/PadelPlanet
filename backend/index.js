@@ -5,6 +5,7 @@ const addRelationsToModels = require("./database/relations");
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const routes = require("./api/routes")
 
 async function checkAndSyncSQLServer() {
   await checkConnection();
@@ -12,26 +13,24 @@ async function checkAndSyncSQLServer() {
   await syncModels();
 }
 
-checkAndSyncSQLServer()
+function initializeAndListenWithExpress() {
+  const app = express()
+    .use(cors())
+    .use(morgan("dev"))
+    .use(express.json())
+    .use("/api", routes)
 
-// function initializeAndListenWithExpress() {
-//   const app = express()
-//     .use(cors())
-//     .use(morgan("dev"))
-//     .use(express.json())
-//     .use("/api", require("./api/routes"))
+    .listen(3000, () => {
+      console.log(`> Listening on port: ${3000}`);
+    });
+}
 
-//     .listen(3000, () => {
-//       console.log(`> Listening on port: ${3000}`);
-//     });
-// }
+async function startAPI() {
+  await checkAndSyncSQLServer();
+  initializeAndListenWithExpress();
+}
 
-// async function startAPI() {
-//   await checkAndSyncSQLServer();
-//   initializeAndListenWithExpress();
-// }
-
-// startAPI();
+startAPI();
 
 // require("dotenv").config();
 
