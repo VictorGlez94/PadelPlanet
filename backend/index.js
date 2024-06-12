@@ -5,7 +5,6 @@ const addRelationsToModels = require("./database/relations");
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const routes = require("./api/routes")
 
 async function checkAndSyncSQLServer() {
   await checkConnection();
@@ -18,7 +17,7 @@ function initializeAndListenWithExpress() {
     .use(cors())
     .use(morgan("dev"))
     .use(express.json())
-    .use("/api", routes)
+    .use("/api", require("./api/routes"))
 
     .listen(3000, () => {
       console.log(`> Listening on port: ${3000}`);
