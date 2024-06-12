@@ -8,16 +8,15 @@ function NotFound() {
       color="#04233A"
     >
       <Container sx={{textAlign: 'center'}}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{textAlign: 'center'}}>
         ¡Vaya! Parece que has golpeado la pelota fuera de la pista
         </Typography>
         <img src="src/assets/images/error 404.png" alt="Error 404" style={{ maxHeight: '200px', width: 'auto', marginTop: '20px', marginBottom: '20px'}}/>
-        <Typography variant="body1" gutterBottom>
+        <Typography variant="body1" gutterBottom sx={{textAlign: 'center'}}>
          La página que estás buscando no existe
         </Typography>
         <Button
           variant="contained"
-          color="primary"
           component={Link}
           to="/"
           sx={{
