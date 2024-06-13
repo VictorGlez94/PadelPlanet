@@ -13,6 +13,8 @@ import PrivacyPolicy from "../pages/Privacy/Privacy";
 import CookiesPolicy from "../pages/Cookies/Cookies";
 import Legal from "../pages/Legal/Legal";
 import NewProduct from "../pages/NewProduct/NewProduct";
+import PaymentMethods from "../pages/PayMethods/PayMethods";
+import Shipping from "../pages/Shipping/Shipping";
 
 
 const router = createBrowserRouter([
@@ -67,6 +69,14 @@ const router = createBrowserRouter([
       {
         path: '/perfil/nuevo-producto',
         element: < NewProduct /> 
+      },
+      {
+        path: '/metodos-pago',
+        element: < PaymentMethods /> 
+      },
+      {
+        path: '/envios',
+        element: < Shipping /> 
       },
       {
         path: "*",

@@ -86,7 +86,7 @@ function Header() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#04233A", marginBottom: "40px" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#04233A", marginBottom: "20px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to="/">
