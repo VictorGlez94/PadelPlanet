@@ -1,8 +1,12 @@
+import ProductList from "../../components/ProductList/ProductList"
 
 
 function Sales() {
   return (
-    <h1>Vende más joder!!!!</h1>
+      <div>
+        <h1>Productos a la venta</h1>
+        <ProductList/>
+      </div>
   )
 }
 

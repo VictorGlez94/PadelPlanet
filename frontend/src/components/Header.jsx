@@ -15,6 +15,7 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import { styled } from "@mui/system";
+import logo from "/src/assets/images/logo.png";
 
 const IconStyle = {
   color: "#CCFF00",
@@ -44,31 +45,33 @@ const StyledMenu = styled(Menu)({
 });
 
 const pages = [
-  <Link to="/perfil/ventas" key="sales-link">
-    <Tooltip title="Productos Vendidos" key="store-tooltip">
-      <IconButton>
-        <StorefrontOutlinedIcon sx={IconStyle} />
-      </IconButton>
-    </Tooltip>
-  </Link>,
-  <Link to="/perfil/favoritos" key="favorite-link">
-    <Tooltip title="Mis favoritos" key="favorite-tooltip">
-      <IconButton>
-        <FavoriteBorderOutlinedIcon sx={IconStyle} />
-      </IconButton>
-    </Tooltip>
-  </Link>,
-  <Button key="add-product-button" sx={addButtonStyle}>
-    <DriveFolderUploadOutlinedIcon sx={{ mr: 0.5 }} />
-    Añadir Producto
-  </Button>,
+  {
+    to: "/perfil/ventas",
+    title: "Productos en venta",
+    icon: <StorefrontOutlinedIcon sx={IconStyle} />,
+  },
+  {
+    to: "/perfil/favoritos",
+    title: "Mis favoritos",
+    icon: <FavoriteBorderOutlinedIcon sx={IconStyle} />,
+  },
+  {
+    component: (
+      <Link to="/perfil/nuevo-producto" style={{ textDecoration: "none" }}>
+        <Button key="add-product-button" sx={addButtonStyle}>
+          <DriveFolderUploadOutlinedIcon sx={{ mr: 0.5 }} />
+          Añadir Producto
+        </Button>
+      </Link>
+    ),
+  },
 ];
 
 const settings = [
-  "Perfil",
-  "Mis Favoritos",
-  "Productos vendidos",
-  "Cerrar sesión",
+  { to: "/perfil/", label: "Mi Perfil" },
+  { to: "/perfil/favoritos", label: "Mis Favoritos" },
+  { to: "/perfil/ventas", label: "Productos en venta" }, 
+  { to: "/", label: "Cerrar Sesión" },
 ];
 
 function Header() {
@@ -83,35 +86,32 @@ function Header() {
   };
 
   return (
-    <AppBar
-      position="static"
-      sx={{ backgroundColor: "#04233A", marginBottom: "40px" }}
-    >
+    <AppBar position="static" sx={{ backgroundColor: "#04233A", marginBottom: "40px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to="/">
-            <img
-              src="src/assets/images/logo.png"
-              alt="Logo"
-              style={{ maxWidth: 250 }}
-            />
+            <img src={logo} alt="Logo" style={{ maxWidth: 250 }} />
           </Link>
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              justifyContent: "flex-end",
-              mr: 2,
-            }}
-          >
+          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", mr: 2 }}>
             {pages.map((page, index) => (
-              <Button key={index}>{page}</Button>
+              page.component ? (
+                <Box key={index} sx={{ display: "flex", alignItems: "center" }}>
+                  {page.component}
+                </Box>
+              ) : (
+                <Box key={index} sx={{ display: "flex", alignItems: "center", mr: 2 }}>
+                  <Link to={page.to} style={{ textDecoration: "none" }}>
+                    <Tooltip title={page.title}>
+                      <IconButton>{page.icon}</IconButton>
+                    </Tooltip>
+                  </Link>
+                </Box>
+              )
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar sx={{bgcolor: "#04233A", color: '#CCFF00'}} />
+              <Avatar sx={{ bgcolor: "#04233A", color: '#CCFF00' }} />
             </IconButton>
             <StyledMenu
               sx={{ mt: "55px" }}
@@ -129,13 +129,15 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {settings.map((setting, index) => (
                 <MenuItem
-                  key={setting}
+                  key={index}
+                  component={Link}
+                  to={setting.to}
                   onClick={handleCloseUserMenu}
                   sx={{ backgroundColor: "#e4ff7c", color: "#04233A" }}
                 >
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center">{setting.label}</Typography>
                 </MenuItem>
               ))}
             </StyledMenu>

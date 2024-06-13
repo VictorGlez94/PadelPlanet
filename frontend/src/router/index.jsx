@@ -12,6 +12,7 @@ import Sales from "../pages/Sales/Sales";
 import PrivacyPolicy from "../pages/Privacy/Privacy";
 import CookiesPolicy from "../pages/Cookies/Cookies";
 import Legal from "../pages/Legal/Legal";
+import NewProduct from "../pages/NewProduct/NewProduct";
 
 
 const router = createBrowserRouter([
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: '/perfil/ventas',
         element: < Sales /> 
+      },
+      {
+        path: '/perfil/nuevo-producto',
+        element: < NewProduct /> 
       },
       {
         path: "*",

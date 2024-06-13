@@ -1,9 +1,12 @@
+import ProductList from "../../components/ProductList/ProductList"
 
 
 function Favorites() {
   return (
-       <h1>Me encanta!!!</h1>
-
+      <div>
+        <h1>Mis favoritos</h1>
+        <ProductList/>
+      </div>
   )
 }
 
