@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import PropTypes from 'prop-types';
-import UploadWidget from '../UploadWidget';
+import UploadWidget from '../UploadWidget'; // Ajusta la ruta según la ubicación de tu componente UploadWidget
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -29,7 +29,7 @@ function ProfileCard({ data }) {
 
   const handleUploadComplete = (url) => {
     setUploadedFoto(url);
-
+    // Aquí podrías llamar a una función para actualizar la foto de perfil en la base de datos, etc.
   };
 
   const handleEdit = () => {
@@ -38,7 +38,7 @@ function ProfileCard({ data }) {
 
   const handleCancelEdit = () => {
     setEditMode(false);
-
+    // Resetear los datos editados si se cancela la edición
     setEditedData({
       nombre: nombre,
       direccion: direccion,
@@ -50,9 +50,11 @@ function ProfileCard({ data }) {
   };
 
   const handleSave = () => {
-
+    // Aquí podrías enviar los datos editados a la base de datos
+    // Ejemplo de función ficticia para actualizar los datos
     console.log("Datos actualizados:", editedData);
-
+    // Simular una función de actualización en la base de datos
+    // updateProfileData(editedData);
     setEditMode(false);
   };
 
@@ -68,7 +70,7 @@ function ProfileCard({ data }) {
   return (
     <Card sx={{ minWidth: 275, marginBottom: 20 }}>
       <CardContent>
-        <Typography variant="h3" component="div" gutterBottom sx={{ textAlign: 'center' }}>
+        <Typography variant="h3" component="div" gutterBottom sx={{ textAlign: 'center', marginBottom: 2 }}>
           Perfil de Usuario
         </Typography>
         <Avatar
@@ -96,11 +98,11 @@ function ProfileCard({ data }) {
           )}
         </Avatar>
         {uploadedFoto ? (
-          <Typography variant="body2" color="#04233A">
+          <Typography variant="body2" color="#04233A" sx={{ marginBottom: 2 }}>
             <strong>Foto de Perfil:</strong> {uploadedFoto}
           </Typography>
         ) : (
-          <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <UploadWidget onUploadComplete={handleUploadComplete} />
           </div>
         )}
@@ -114,6 +116,8 @@ function ProfileCard({ data }) {
               onChange={handleChange}
               fullWidth
               sx={{ marginBottom: 2 }}
+              InputLabelProps={{ style: { fontSize: 16 } }}
+              inputProps={{ style: { fontSize: 16 } }}
             />
             <TextField
               name="direccion"
@@ -122,6 +126,8 @@ function ProfileCard({ data }) {
               onChange={handleChange}
               fullWidth
               sx={{ marginBottom: 2 }}
+              InputLabelProps={{ style: { fontSize: 16 } }}
+              inputProps={{ style: { fontSize: 16 } }}
             />
             <TextField
               name="telefono"
@@ -130,6 +136,8 @@ function ProfileCard({ data }) {
               onChange={handleChange}
               fullWidth
               sx={{ marginBottom: 2 }}
+              InputLabelProps={{ style: { fontSize: 16 } }}
+              inputProps={{ style: { fontSize: 16 } }}
             />
             <TextField
               select
@@ -139,6 +147,8 @@ function ProfileCard({ data }) {
               onChange={handleGeneroChange}
               fullWidth
               sx={{ marginBottom: 2 }}
+              InputLabelProps={{ style: { fontSize: 16 } }}
+              inputProps={{ style: { fontSize: 16 } }}
             >
               {generoOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -153,6 +163,8 @@ function ProfileCard({ data }) {
               onChange={handleChange}
               fullWidth
               sx={{ marginBottom: 2 }}
+              InputLabelProps={{ style: { fontSize: 16 } }}
+              inputProps={{ style: { fontSize: 16 } }}
             />
             <TextField
               name="cardnumber"
@@ -161,39 +173,41 @@ function ProfileCard({ data }) {
               onChange={handleChange}
               fullWidth
               sx={{ marginBottom: 2 }}
+              InputLabelProps={{ style: { fontSize: 16 } }}
+              inputProps={{ style: { fontSize: 16 } }}
             />
 
-            <Button variant="contained" color="primary" onClick={handleSave} sx={{ marginRight: 2, bgcolor: '#04233A' }}>
+            <Button variant="contained" color="primary" onClick={handleSave} sx={{ marginRight: 2, bgcolor: '#04233A', marginBottom: 2 }}>
               Guardar
             </Button>
-            <Button variant="contained" onClick={handleCancelEdit} sx={{ bgcolor: '#04233A' }}>
+            <Button variant="contained" onClick={handleCancelEdit} sx={{ bgcolor: '#04233A', marginBottom: 2 }}>
               Cancelar
             </Button>
           </>
         ) : (
           <>
-            <Typography variant="body2" color="#04233A">
+            <Typography variant="body1" color="#04233A" sx={{ marginBottom: 1 }}>
               <strong>Usuario:</strong> {usuario}
             </Typography>
-            <Typography variant="body2" color="#04233A">
+            <Typography variant="body1" color="#04233A" sx={{ marginBottom: 1 }}>
               <strong>Nombre:</strong> {nombre}
             </Typography>
-            <Typography variant="body2" color="#04233A">
+            <Typography variant="body1" color="#04233A" sx={{ marginBottom: 1 }}>
               <strong>Fecha de Nacimiento:</strong> {fechaNacimiento}
             </Typography>
-            <Typography variant="body2" color="#04233A">
+            <Typography variant="body1" color="#04233A" sx={{ marginBottom: 1 }}>
               <strong>Teléfono:</strong> {telefono}
             </Typography>
-            <Typography variant="body2" color="#04233A">
+            <Typography variant="body1" color="#04233A" sx={{ marginBottom: 1 }}>
               <strong>Dirección:</strong> {direccion}
             </Typography>
-            <Typography variant="body2" color="#04233A">
+            <Typography variant="body1" color="#04233A" sx={{ marginBottom: 1 }}>
               <strong>Género:</strong> {genero}
             </Typography>
-            <Typography variant="body2" color="#04233A">
+            <Typography variant="body1" color="#04233A" sx={{ marginBottom: 1 }}>
               <strong>E-mail:</strong> {email}
             </Typography>
-            <Typography variant="body2" color="#04233A">
+            <Typography variant="body1" color="#04233A" sx={{ marginBottom: 1 }}>
               <strong>Número de Tarjeta:</strong> {cardnumber}
             </Typography>
             <Button variant="contained" onClick={handleEdit} sx={{ marginTop: 2, bgcolor: '#04233A' }}>
