@@ -16,6 +16,7 @@ const User = sequelize.define(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: "123",
     },
     name: {
       type: DataTypes.STRING,
@@ -29,6 +30,8 @@ const User = sequelize.define(
     },
     card_number: {
       type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: 'XXXXX'
     },
     phone: {
       type: DataTypes.BIGINT,
@@ -40,7 +43,8 @@ const User = sequelize.define(
       type: DataTypes.STRING,
     },
     role_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      defaultValue: 2,
     },
     created_at: {
       type: DataTypes.DATE,

@@ -72,10 +72,28 @@ async function deleteUser(req, res) {
   }
 }
 
+const getOwnProfile = async (req, res) => {
+  try{
+    const user = await User.findByPk(res.locals.user.id);
+
+    if(!user){
+      return res.send('User not found')
+    }
+    res.json({
+      message : "Profile fetched",
+      result: user
+    })
+
+  }catch(error){
+    res.json(error);
+  }
+}
+
 module.exports = {
   getAllUsers,
   getOneUser,
   createUser,
   updateUser,
   deleteUser,
+  getOwnProfile,
 };

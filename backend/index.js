@@ -14,9 +14,10 @@ async function checkAndSyncSQLServer() {
 
 function initializeAndListenWithExpress() {
   const app = express()
-    .use(cors())
+    .use(cors()) //debe rellenarse con la url del front, ahora está vacío porque es en localhost
     .use(morgan("dev"))
-    .use(express.json())
+    .use(express.json())// para que se sea capaz de leer json
+    //middleware: urlencoded (para que entienda determinadas referencias en la url como espacio = %20)
     .use("/api", require("./api/routes"))
 
     .listen(3000, () => {
