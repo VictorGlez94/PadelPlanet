@@ -1,5 +1,6 @@
 import { Box, Container, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import img404 from "/src/assets/images/error_404.png";
 
 function NotFound() {
   return (
@@ -7,11 +8,11 @@ function NotFound() {
       bgcolor="white"
       color="#04233A"
     >
-      <Container sx={{textAlign: 'center'}}>
+      <Container sx={{textAlign: 'center', marginTop: '30px'}}>
         <Typography variant="h4" gutterBottom sx={{textAlign: 'center'}}>
         ¡Vaya! Parece que has golpeado la pelota fuera de la pista
         </Typography>
-        <img src="src/assets/images/error 404.png" alt="Error 404" style={{ maxHeight: '200px', width: 'auto', marginTop: '20px', marginBottom: '20px'}}/>
+        <img src={img404} alt="Error 404" style={{ maxHeight: '200px', width: 'auto', marginTop: '20px', marginBottom: '20px'}}/>
         <Typography variant="body1" gutterBottom sx={{textAlign: 'center'}}>
          La página que estás buscando no existe
         </Typography>

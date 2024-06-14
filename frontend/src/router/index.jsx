@@ -63,7 +63,7 @@ const router = createBrowserRouter([
         element: < Favorites /> 
       },
       {
-        path: '/perfil/ventas',
+        path: '/perfil/productos-en-venta',
         element: < Sales /> 
       },
       {

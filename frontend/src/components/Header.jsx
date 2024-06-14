@@ -46,7 +46,7 @@ const StyledMenu = styled(Menu)({
 
 const pages = [
   {
-    to: "/perfil/ventas",
+    to: "/perfil/productos-en-venta",
     title: "Productos en venta",
     icon: <StorefrontOutlinedIcon sx={IconStyle} />,
   },
@@ -68,9 +68,9 @@ const pages = [
 ];
 
 const settings = [
-  { to: "/perfil/", label: "Mi Perfil" },
+  { to: "/perfil", label: "Mi Perfil" },
   { to: "/perfil/favoritos", label: "Mis Favoritos" },
-  { to: "/perfil/ventas", label: "Productos en venta" }, 
+  { to: "/perfil/productos-en-venta", label: "Productos en venta" }, 
   { to: "/", label: "Cerrar Sesión" },
 ];
 
