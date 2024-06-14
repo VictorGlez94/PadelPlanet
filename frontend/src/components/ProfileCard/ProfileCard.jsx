@@ -4,17 +4,17 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import PropTypes from 'prop-types';
-import UploadWidget from '../UploadWidget'; // Ajusta la ruta según la ubicación de tu componente UploadWidget
+import UploadWidget from '../UploadWidget'; 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 
 const generoOptions = [
-  { value: 'hombre', label: 'Hombre' },
-  { value: 'mujer', label: 'Mujer' },
+  { value: 'Hombre', label: 'Hombre' },
+  { value: 'Mujer', label: 'Mujer' },
 ];
 
-function ProfileCard({ data }) {
+function ProfileCard({ data, onSave }) {
   const { usuario, nombre, fechaNacimiento, telefono, direccion, genero, foto, email, cardnumber } = data;
   const [uploadedFoto, setUploadedFoto] = useState(foto);
   const [editMode, setEditMode] = useState(false);
@@ -51,10 +51,9 @@ function ProfileCard({ data }) {
 
   const handleSave = () => {
     // Aquí podrías enviar los datos editados a la base de datos
-    // Ejemplo de función ficticia para actualizar los datos
     console.log("Datos actualizados:", editedData);
-    // Simular una función de actualización en la base de datos
-    // updateProfileData(editedData);
+    // Actualizar los datos en el componente padre
+    onSave({ ...editedData, foto: uploadedFoto });
     setEditMode(false);
   };
 
@@ -232,6 +231,7 @@ ProfileCard.propTypes = {
     cardnumber: PropTypes.string,
     foto: PropTypes.string,
   }).isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 export default ProfileCard;
