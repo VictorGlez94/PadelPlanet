@@ -1,15 +1,15 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 export const CartContext = createContext();
 
-/*simplifica el acceso al contexto del carrito en otros componentes.*/
+/* Simplifies access to the cart context in other components. */
 export const useCart = () => useContext(CartContext);
 
-/*componente que provee el contexto CartContext a sus componentes hijos. children representa cualquier componente hijo que esté envuelto por CartProvider y se declara el estado cart, que es inicializado como un array vacío.*/
+/* Component that provides the CartContext to its child components. Children represent any child component wrapped by CartProvider, and the cart state is initialized as an empty array. */
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
 
-    /*Añade un producto al carrito o actualiza su cantidad si ya existe.*/
+    /* Adds a product to the cart or updates its quantity if it already exists. */
     const anadirCarrito = (producto, cantidad) => {
         setCart((prevCart) => {
             const existingProductIndex = prevCart.findIndex((item) => item.id === producto.id);
@@ -24,14 +24,14 @@ export const CartProvider = ({ children }) => {
         });
     };
 
-    /*Elimina un producto del carrito*/
+    /* Removes a product from the cart */
     const removerCarrito = (productoId) => {
         setCart((prevCart) => prevCart.filter((item) => item.id !== productoId));
     };
 
-    /*Actualiza la cantidad de un producto específico en el carrito.*/
+    /* Updates the quantity of a specific product in the cart. */
     const actualizarCantidad = (productoId, nuevaCantidad) => {
-        if (nuevaCantidad < 1) return; /* Evita cantidades negativas o cero*/
+        if (nuevaCantidad < 1) return; /* Prevents negative or zero quantities */
         setCart((prevCart) => {
             return prevCart.map((item) => {
                 if (item.id === productoId) {
@@ -42,8 +42,29 @@ export const CartProvider = ({ children }) => {
         });
     };
 
+    /* Creates an order with the current cart contents */
+    const createOrder = async (cart) => {
+        try {
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cart }),
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error creating order:', error);
+            return { success: false, message: error.message };
+        }
+    };
+
     return (
-        <CartContext.Provider value={{ cart, anadirCarrito, removerCarrito, actualizarCantidad }}>
+        <CartContext.Provider value={{ cart, anadirCarrito, removerCarrito, actualizarCantidad, createOrder }}>
             {children}
         </CartContext.Provider>
     );

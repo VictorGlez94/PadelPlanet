@@ -19,8 +19,7 @@ function Home() {
   };
 
   const handleCheckout = () => {
-    alert('Proceeding to payment...');
-    // Aquí podrías redirigir a la página de pago o procesar el pago
+    alert('Redirigiendo a página de pago...');
   };
 
   return (
@@ -29,28 +28,11 @@ function Home() {
       <SearchBar onSearchChange={setSearchTerm} />
 
       <h2>Nuevos Productos</h2>
-      <Slider> {/* Aquí podrías añadir tu lógica para mostrar productos */} </Slider>
+       {/* Aquí podrías añadir tu lógica para mostrar productos */} 
 
       <h3>Sugerencias</h3>
       {/* Aquí podrías añadir la lógica para mostrar sugerencias */}
 
-      <aside className="carrito">
-        <h2>Carrito</h2>
-        <div id="carrito-lista">
-          {cart.map((item, index) => (
-            <div key={index}>
-              <p>{item.name} - {item.price}€</p>
-            </div>
-          ))}
-        </div>
-        <p>Total: <span id="total">{total}</span>€</p>
-        <Button onClick={handleClearCart} variant="contained" color="secondary">
-          Vaciar Carrito
-        </Button>
-        <Button onClick={handleCheckout} variant="contained" color="primary">
-          Pagar
-        </Button>
-      </aside>
     </Container>
   );
 }

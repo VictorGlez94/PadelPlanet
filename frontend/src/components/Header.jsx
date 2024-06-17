@@ -67,7 +67,7 @@ const pages = [
     ),
   },
   {
-    to: "/carrito",
+    to: "/perfil/carrito",
     title: "Carrito",
     icon: <ShoppingCartOutlinedIcon sx={IconStyle} />,
   },
@@ -98,10 +98,10 @@ function Header() {
           <Link to="/">
             <img src={logo} alt="Logo" style={{ maxWidth: 250 }} />
           </Link>
-          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", mr: 2 }}>
+          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
             {pages.map((page, index) => (
               page.component ? (
-                <Box key={index} sx={{ display: "flex", alignItems: "center" }}>
+                <Box key={index} sx={{ display: "flex", alignItems: "center", mr: 2 }}>
                   {page.component}
                 </Box>
               ) : (

@@ -1,5 +1,5 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root from "../layout/root";
+import { createBrowserRouter } from "react-router-dom";
+import Root from "../layout/root"
 import Home from "../pages/Home/Home";
 import About from "../pages/About/About";
 import Login from "../pages/Login/Login";
@@ -12,7 +12,11 @@ import Sales from "../pages/Sales/Sales";
 import PrivacyPolicy from "../pages/Privacy/Privacy";
 import CookiesPolicy from "../pages/Cookies/Cookies";
 import Legal from "../pages/Legal/Legal";
+import NewProduct from "../pages/NewProduct/NewProduct";
+import PaymentMethods from "../pages/PayMethods/PayMethods";
+import Shipping from "../pages/Shipping/Shipping";
 import Cart from "../pages/Cart/Cart";
+
 
 const router = createBrowserRouter([
   {
@@ -76,7 +80,7 @@ const router = createBrowserRouter([
         element: < Shipping />
       },
       {
-        path: "/carrito",
+        path: "/perfil/carrito",
         element: <Cart />,
       },
       {
