@@ -15,6 +15,7 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import Badge from "@mui/material/Badge";
 import { styled } from "@mui/system";
 import logo from "/src/assets/images/logo.png";
 
@@ -82,6 +83,7 @@ const settings = [
 
 function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [cartItemCount, setCartItemCount] = React.useState(3);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -108,7 +110,15 @@ function Header() {
                 <Box key={index} sx={{ display: "flex", alignItems: "center", mr: 2 }}>
                   <Link to={page.to} style={{ textDecoration: "none" }}>
                     <Tooltip title={page.title}>
-                      <IconButton>{page.icon}</IconButton>
+                      <IconButton>
+                        {page.to === "/perfil/carrito" ? (
+                          <Badge badgeContent={cartItemCount} color='primary'>
+                            {page.icon}
+                          </Badge>
+                        ) : (
+                          page.icon
+                        )}
+                      </IconButton>
                     </Tooltip>
                   </Link>
                 </Box>
