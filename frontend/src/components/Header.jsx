@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { styled } from "@mui/system";
 import logo from "/src/assets/images/logo.png";
 
@@ -65,12 +66,17 @@ const pages = [
       </Link>
     ),
   },
+  {
+    to: "/carrito",
+    title: "Carrito",
+    icon: <ShoppingCartOutlinedIcon sx={IconStyle} />,
+  },
 ];
 
 const settings = [
   { to: "/perfil", label: "Mi Perfil" },
   { to: "/perfil/favoritos", label: "Mis Favoritos" },
-  { to: "/perfil/productos-en-venta", label: "Productos en venta" }, 
+  { to: "/perfil/productos-en-venta", label: "Productos en venta" },
   { to: "/", label: "Cerrar Sesión" },
 ];
 

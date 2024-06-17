@@ -1,5 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
-import Root from "../layout/root"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from "../layout/root";
 import Home from "../pages/Home/Home";
 import About from "../pages/About/About";
 import Login from "../pages/Login/Login";
@@ -12,10 +12,7 @@ import Sales from "../pages/Sales/Sales";
 import PrivacyPolicy from "../pages/Privacy/Privacy";
 import CookiesPolicy from "../pages/Cookies/Cookies";
 import Legal from "../pages/Legal/Legal";
-import NewProduct from "../pages/NewProduct/NewProduct";
-import PaymentMethods from "../pages/PayMethods/PayMethods";
-import Shipping from "../pages/Shipping/Shipping";
-
+import Cart from "../pages/Cart/Cart";
 
 const router = createBrowserRouter([
   {
@@ -56,34 +53,38 @@ const router = createBrowserRouter([
       },
       {
         path: '/perfil',
-        element: <Profile /> 
+        element: <Profile />
       },
       {
         path: '/perfil/favoritos',
-        element: < Favorites /> 
+        element: < Favorites />
       },
       {
         path: '/perfil/productos-en-venta',
-        element: < Sales /> 
+        element: < Sales />
       },
       {
         path: '/perfil/nuevo-producto',
-        element: < NewProduct /> 
+        element: < NewProduct />
       },
       {
         path: '/metodos-pago',
-        element: < PaymentMethods /> 
+        element: < PaymentMethods />
       },
       {
         path: '/envios',
-        element: < Shipping /> 
+        element: < Shipping />
+      },
+      {
+        path: "/carrito",
+        element: <Cart />,
       },
       {
         path: "*",
         element: <NotFound />,
-      }
+      },
     ],
   },
 ]);
 
-export default router
+export default router;
