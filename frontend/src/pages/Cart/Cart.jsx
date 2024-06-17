@@ -14,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import "./Cart.css";
 
 const initialCart = [
@@ -170,10 +171,15 @@ const Cart = () => {
               </Typography>
             </Box>
           </Box>
-          <Box sx={{ textAlign: "center", marginTop: 2 }}>
-            <Typography variant="caption">
-              <strong>Envío en 24/72h</strong>
-            </Typography>
+          <Box sx={{ marginTop: 2, display:'flex', justifyContent:'center', gap: '10px' }}>
+            <Box>
+              <AccessTimeIcon />
+            </Box>
+            <Box>
+              <Typography variant="caption">
+                <strong>Envío en 24/72h</strong>
+              </Typography>
+            </Box>
           </Box>
         </Grid>
       </Grid>
