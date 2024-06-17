@@ -10,12 +10,13 @@ const {
 } = require("../controllers/user");
 
 const {
-  checkAuth
+  checkAuth,
+  checkAdmin
 } = require('../middlewares/index')
 
-router.get("/",checkAuth,  getAllUsers);
-router.get('/profile', checkAuth, getOwnProfile)
-router.get("/:id", getOneUser);
+router.get("/", checkAuth, checkAdmin, getAllUsers);
+router.get('/profile', checkAuth, checkAdmin, getOwnProfile)
+router.get("/:id", checkAuth, checkAdmin, getOneUser);
 router.post("/", createUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);

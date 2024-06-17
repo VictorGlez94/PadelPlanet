@@ -10,7 +10,7 @@ const Product = sequelize.define(
       primaryKey: true,
     },
     seller_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     name: {
       type: DataTypes.STRING,
@@ -20,7 +20,7 @@ const Product = sequelize.define(
       type: DataTypes.STRING,
     },
     category_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     description: {
       type: DataTypes.TEXT,
@@ -29,7 +29,10 @@ const Product = sequelize.define(
       type: DataTypes.FLOAT,
     },
     product_status_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+    },
+    image_url: {
+      type: DataTypes.STRING,
     },
     created_at: {
       type: DataTypes.DATE,

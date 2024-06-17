@@ -10,7 +10,7 @@ const Role = sequelize.define(
       primaryKey: true,
     },
     role: {
-      type: DataTypes.ENUM('admin, user, moderator'),
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },

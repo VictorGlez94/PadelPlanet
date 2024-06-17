@@ -25,13 +25,17 @@ const User = sequelize.define(
     birthday: {
       type: DataTypes.DATE,
     },
+    user_img: {
+      type: DataTypes.STRING,
+      defaultValue: 'asdasd'
+    },
     gender: {
       type: DataTypes.ENUM("male", "female", "other"),
     },
     card_number: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: 'XXXXX'
+      defaultValue: "XXXXX",
     },
     phone: {
       type: DataTypes.BIGINT,

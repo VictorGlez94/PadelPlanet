@@ -5,36 +5,39 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 
 const login = async (req, res) => {
-    try{
-        console.log("aqui")
-        const user = await User.findOne({
-            where: {
-                email: req.body.email
-            }
-        });
+    try {
+      console.log("aqui");
+      const user = await User.findOne({
+        where: {
+          email: req.body.email,
+        },
+      });
 
-        if(!user){
-            res.json({
-                message: "user nor found",
-                result: {}
-            })
-        };
-
-        const payload = {
-            email: user.email
-        };
-        const token = jwt.sign(payload, process.env.JWT_WEBTOKENSECRET, {
-            expiresIn:'2h'
-        });
+      if (!user) {
         res.json({
-            message: "Login succesful",
-            result: {
-                token,
-            },
+          message: "Email or password incorrect",
         });
-    }
-    catch(error){
-        res.json(error)
+      }
+
+      const result = bcrypt.compareSync(req.body.password, user.password);
+
+      if (!result) {
+        return res.send("Email or password incorrect");
+      }
+      const payload = {
+        email: user.email,
+      };
+      const token = jwt.sign(payload, process.env.JWT_WEBTOKENSECRET, {
+        expiresIn: "2h",
+      });
+      res.json({
+        message: "Login succesful",
+        result: {
+          token,
+        },
+      });
+    } catch (error) {
+      res.json(error);
     }
 }
 

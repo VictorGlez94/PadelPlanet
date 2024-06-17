@@ -28,7 +28,15 @@ const checkAuth = (req, res, next) => {
     }
   );
 };
+const checkAdmin = (req, res, next) => {
+  console.log(res.locals.user.role_id, res.locals.user.role_id !== 2);
+  if(res.locals.user.role_id !== 2) {
+    return res.send ('User not authorized')
+  }
+  next()
+}
 
 module.exports = {
-    checkAuth
+    checkAuth,
+    checkAdmin
 }

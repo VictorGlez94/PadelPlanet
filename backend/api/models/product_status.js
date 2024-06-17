@@ -10,7 +10,7 @@ const ProductsStatus = sequelize.define(
       primaryKey: true,
     },
     status: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('Nuevo', 'Poco usado', 'Muy usado'),
       allowNull: false,
     },
   },
