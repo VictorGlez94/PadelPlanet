@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Box,
   Typography,
@@ -13,53 +12,12 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { useCart } from "../../context/CartContext";
 import "./Cart.css";
 
-const initialCart = [
-  {
-    id: 1,
-    nombre: "Producto 1",
-    precio: 10,
-    cantidad: 1,
-    imagen: "https://via.placeholder.com/150",
-  },
-  {
-    id: 2,
-    nombre: "Producto 2",
-    precio: 20,
-    cantidad: 1,
-    imagen: "https://via.placeholder.com/150",
-  },
-  {
-    id: 3,
-    nombre: "Producto 3",
-    precio: 20,
-    cantidad: 1,
-    imagen: "https://via.placeholder.com/150",
-  },
-  {
-    id: 4,
-    nombre: "Producto 4",
-    precio: 20,
-    cantidad: 1,
-    imagen: "https://via.placeholder.com/150",
-  },
-];
-
 const Cart = () => {
-  const [cart, setCart] = useState(initialCart);
-
-  const removerCarrito = (productoId) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productoId));
-  };
-
-  const subtotal = cart.reduce(
-    (acumulado, item) => acumulado + item.cantidad * (item.precio || 0),
-    0
-  );
-  const total = subtotal;
+  const { cart, removeFromCart } = useCart();
+  const total = cart.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
 
   if (cart.length === 0) {
     return (
@@ -115,7 +73,7 @@ const Cart = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <IconButton onClick={() => removerCarrito(item.id)}>
+                    <IconButton onClick={() => removeFromCart(item.id)}>
                       <DeleteIcon />
                     </IconButton>
                   </CardActions>
@@ -144,43 +102,26 @@ const Cart = () => {
             <Typography variant="h6">
               <strong>Resumen del pedido:</strong>
             </Typography>
-            <Typography>Artículos: {cart.length} </Typography>
+            <Typography>Artículos: {cart.length}</Typography>
             <Typography>
               Total (impuestos inc.): {total.toFixed(2)} €
             </Typography>
             <Button
+              component={Link}
+              to="/finalizar-compra"
               variant="contained"
               sx={{
                 width: "100%",
                 marginTop: 2,
-                backgroundColor: "#04233A",
-                color: "#FFFFFF",
-                "&:hover": { backgroundColor: "#1565C0" },
+                backgroundColor: "#CCFF00",
+                color: "#04233A",
+                fontWeight:'bold',
+                "&:hover": { backgroundColor: "#e9ff60" },
               }}
             >
               Finalizar Compra
             </Button>
           </Card>
-          <Box sx={{ marginTop: 2, display:'flex', justifyContent:'center', gap: '10px' }}>
-            <Box>
-              <CreditCardIcon />
-            </Box>
-            <Box>
-              <Typography variant="caption">
-                <strong>Pago seguro garantizado</strong>
-              </Typography>
-            </Box>
-          </Box>
-          <Box sx={{ marginTop: 2, display:'flex', justifyContent:'center', gap: '10px' }}>
-            <Box>
-              <AccessTimeIcon />
-            </Box>
-            <Box>
-              <Typography variant="caption">
-                <strong>Envío en 24/72h</strong>
-              </Typography>
-            </Box>
-          </Box>
         </Grid>
       </Grid>
     </Box>

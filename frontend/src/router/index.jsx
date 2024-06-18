@@ -16,7 +16,7 @@ import NewProduct from "../pages/NewProduct/NewProduct";
 import PaymentMethods from "../pages/PayMethods/PayMethods";
 import Shipping from "../pages/Shipping/Shipping";
 import Cart from "../pages/Cart/Cart";
-
+import Payment from "../pages/FinalPayment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -81,7 +81,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/perfil/carrito",
-        element: <Cart />,
+        element: (
+            <Cart />
+        )
+      },
+      {
+        path: "/finalizar-compra",
+        element: (
+            <Payment />
+        )
       },
       {
         path: "*",
