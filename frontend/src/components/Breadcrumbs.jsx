@@ -9,6 +9,7 @@ const StyledBreadcrumbs = styled(Breadcrumbs)({
   backgroundColor: '#f0f0f0',
   padding: '10px 215px',
   borderRadius: '4px',
+  marginTop: '15px',
   marginBottom: '10px',
 });
 

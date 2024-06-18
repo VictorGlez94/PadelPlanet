@@ -1,4 +1,3 @@
-// Header.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
@@ -96,7 +95,7 @@ function Header() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#04233A", marginBottom: "20px" }}>
+    <AppBar position="sticky" sx={{ backgroundColor: "#04233A" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to="/">
