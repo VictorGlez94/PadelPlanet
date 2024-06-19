@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt')
 
 const login = async (req, res) => {
     try {
-      console.log("aqui");
       const user = await User.findOne({
         where: {
           email: req.body.email,
