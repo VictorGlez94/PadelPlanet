@@ -56,11 +56,6 @@ const signup = async (req, res) => {
       phone: req.body.phone,
       address: req.body.address,
       role_id: req.body.role_id || 2, // Default role_id to 2 if not provided
-      //   where: {
-      //     email: req.body.email,
-      //     username: req.body.username,
-      //     name: req.body.name,
-      //   },
     });
 
     const payload = {

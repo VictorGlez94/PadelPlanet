@@ -15,7 +15,7 @@ const {
 } = require('../middlewares/index')
 
 router.get("/", checkAuth, checkAdmin, getAllUsers);
-router.get('/profile', checkAuth, checkAdmin, getOwnProfile)
+router.get('/profile', checkAuth, getOwnProfile)
 router.get("/:id", checkAuth, checkAdmin, getOneUser);
 router.post("/", createUser);
 router.put("/:id", updateUser);
