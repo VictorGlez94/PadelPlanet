@@ -10,7 +10,7 @@ const Product = sequelize.define(
       primaryKey: true,
     },
     seller_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     name: {
       type: DataTypes.STRING,
@@ -20,16 +20,19 @@ const Product = sequelize.define(
       type: DataTypes.STRING,
     },
     category_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     description: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
     },
     price: {
       type: DataTypes.FLOAT,
     },
     product_status_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+    },
+    image_url: {
+      type: DataTypes.STRING,
     },
     created_at: {
       type: DataTypes.DATE,
@@ -40,6 +43,33 @@ const Product = sequelize.define(
     timestamps: false,
   }
 );
+
+// Generate random data
+
+// (async () => {
+//   const { default: random } = await import("random");
+//   const products = [];
+
+//   for (let i = 0; i < 10; i++) {
+//     const product = {
+//       seller_id: random.int(1,5),
+//       name: `Product ${i}`,
+//       brand: `Brand ${i}`,
+//       category_id: random.int(1, 5),
+//       description: `This is a product description for product ${i}`,
+//       price: random.float(10.0, 100.0),
+//       product_status_id: random.int(1, 3),
+//       image_url: `https://example.com/image${i}`,
+//     };
+
+//     products.push(product);
+//   }
+
+//   // Insert the generated data
+//   await Product.bulkCreate(products);
+
+//   console.log("Products created successfully");
+// })();
 
 
 

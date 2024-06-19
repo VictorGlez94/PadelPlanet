@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const Product = require("../models/product");
 
 async function getAllPosts(req, res) {
   try {
@@ -74,10 +75,66 @@ async function deletePost(req, res) {
   }
 }
 
+async function createPostWithProduct(req, res) {
+  try {
+    const user = res.locals.user;
+
+    // Verificar que user y las propiedades de req.body existan
+    if (
+      !user ||
+      !req.body.name ||
+      !req.body.brand ||
+      !req.body.category_id ||
+      !req.body.price ||
+      !req.body.product_status_id ||
+      !req.body.image_url
+    ) {
+      return res.status(400).send("Missing required fields");
+    }
+
+    // Create the Product
+    const newProduct = await Product.create({
+      seller_id: user.id,
+      name: req.body.name,
+      brand: req.body.brand,
+      category_id: req.body.category_id,
+      description: req.body.description,
+      price: req.body.price,
+      product_status_id: req.body.product_status_id,
+      image_url: req.body.image_url,
+    });
+
+    // Create the Post using the product_id from the newly created Product
+    const newPost = await Post.create({
+      product_id: newProduct.id, 
+      sell_status: "Disponible"
+    });
+    // const post = await Post.createProduct({
+    //   seller_id: user.id,
+    //   name: req.body.name,
+    //   brand: req.body.brand,
+    //   category_id: req.body.category_id,
+    //   price: req.body.price,
+    //   product_status_id: req.body.product_status_id,
+    //   image_url: req.body.image_url,
+    // });
+    // console.log(post)
+
+    if (newPost) {
+      return res.status(200).json("Post created with product");
+    } else {
+      return res.status(404).send("Post not created");
+    }
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   getAllPosts,
   getOnePost,
   createPost,
   updatePost,
   deletePost,
+  createPostWithProduct
 };

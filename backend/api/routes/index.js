@@ -7,5 +7,6 @@ router.use("/productstatus", require("./product_status"));
 router.use("/product", require("./product"));
 router.use("/role", require("./role"));
 router.use("/user", require("./user"));
+router.use('/auth', require("./auth.router"));
 
 module.exports = router;
