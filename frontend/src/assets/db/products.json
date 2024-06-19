@@ -10,7 +10,8 @@
       "product_status_id": 2,
       "image_url": "https://contents.mediadecathlon.com/p2591711/k$b3ef07f8225aea41d42c2c5597c5d3c7/sq/pala-de-padel-adulto-head-evo-speed.jpg?format=auto&f=800x0",
       "created_at": "2024-06-18T18:56:01.529Z",
-      "category": "Palas"
+      "category": "Palas",
+      "favorite": true
     },
     {
       "id": 5,
@@ -23,7 +24,8 @@
       "product_status_id": 1,
       "image_url": "https://padelcoronado.com/wp-content/uploads/2023/09/head-pala-padel-extremfe-elite-2023.jpeg.webp",
       "created_at": "2024-06-15T18:56:01.529Z",
-      "category": "Zapatillas"
+      "category": "Zapatillas",
+      "favorite": false
     },
     {
       "id": 6,
@@ -36,7 +38,8 @@
       "product_status_id": 2,
       "image_url": "https://allforpadel.com/2994-large_default/adidas-rx-300.jpg",
       "created_at": "2024-06-16T18:56:01.529Z",
-      "category": "Camisetas"
+      "category": "Camisetas",
+      "favorite": false
     },
     {
       "id": 7,
@@ -49,7 +52,8 @@
       "product_status_id": 3,
       "image_url": "https://allforpadel.com/2994-large_default/adidas-rx-300.jpg",
       "created_at": "2024-06-18T18:56:01.529Z",
-      "category": "Pantalones"
+      "category": "Pantalones",
+      "favorite": false
     },
     {
       "id": 8,
@@ -62,7 +66,8 @@
       "product_status_id": 3,
       "image_url": "https://example.com/image4",
       "created_at": "2024-06-18T18:56:01.529Z",
-      "category": "Mochilas"
+      "category": "Mochilas",
+      "favorite": false
     },
     {
       "id": 9,
@@ -75,7 +80,8 @@
       "product_status_id": 1,
       "image_url": "https://example.com/image5",
       "created_at": "2024-06-18T18:56:01.529Z",
-      "category": "Accesorios"
+      "category": "Accesorios",
+      "favorite": false
     },
     {
       "id": 10,
@@ -88,7 +94,8 @@
       "product_status_id": 2,
       "image_url": "https://example.com/image6",
       "created_at": "2024-06-18T18:56:01.529Z",
-      "category": "Palas"
+      "category": "Palas",
+      "favorite": false
     },
     {
       "id": 11,
@@ -101,7 +108,8 @@
       "product_status_id": 3,
       "image_url": "https://example.com/image7",
       "created_at": "2024-06-18T18:56:01.529Z",
-      "category": "Palas"
+      "category": "Palas",
+      "favorite": false
     },
     {
       "id": 12,
@@ -114,7 +122,8 @@
       "product_status_id": 1,
       "image_url": "https://example.com/image8",
       "created_at": "2024-06-18T18:56:01.529Z",
-      "category": "Zapatillas"
+      "category": "Zapatillas",
+      "favorite": false
     },
     {
       "id": 13,
@@ -127,7 +136,8 @@
       "product_status_id": 1,
       "image_url": "https://example.com/image9",
       "created_at": "2024-06-18T18:56:01.529Z",
-      "category": "Zapatillas"
+      "category": "Zapatillas",
+      "favorite": false
     }
   ]
   
