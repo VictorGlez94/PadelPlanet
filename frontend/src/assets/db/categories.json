@@ -1,0 +1,33 @@
+[
+    {
+      "id": 1,
+      "name": "Palas",
+      "image": "https://res.cloudinary.com/dcw7qaxig/image/upload/v1718824976/pala_dkk9sp.png"
+    },
+    {
+      "id": 2,
+      "name": "Zapatillas",
+      "image": "https://res.cloudinary.com/dcw7qaxig/image/upload/v1718824976/zapatillas_zasuzx.png"
+    },
+    {
+      "id": 3,
+      "name": "Camisetas",
+      "image": "https://res.cloudinary.com/dcw7qaxig/image/upload/v1718824976/camiseta_twfljk.png"
+    },
+    {
+      "id": 4,
+      "name": "Pantalones",
+      "image": "https://res.cloudinary.com/dcw7qaxig/image/upload/v1718824976/corto_dedwtz.png"
+    },
+    {
+      "id": 5,
+      "name": "Mochilas",
+      "image": "https://res.cloudinary.com/dcw7qaxig/image/upload/v1718824976/mochila_tkopsj.png"
+    },
+    {
+      "id": 6,
+      "name": "Accesorios",
+      "image": "https://res.cloudinary.com/dcw7qaxig/image/upload/v1718823766/pvvmgdkgqnpzyilqdnac.png"
+    }
+  ]
+  
