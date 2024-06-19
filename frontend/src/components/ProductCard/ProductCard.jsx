@@ -12,16 +12,32 @@ import Box from "@mui/material/Box";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { formatDistanceToNowStrict } from "date-fns";
 import { es } from "date-fns/locale";
+import { useCart } from "../../context/CartContext";
 
 const ProductCard = ({ product, category }) => {
   const timeAgo = formatDistanceToNowStrict(new Date(product.created_at), { addSuffix: true, locale: es });
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    console.log("Product to add to cart:", product);
+    addToCart(product);
+  };
 
   if (category && product.category !== category) {
     return null; 
   }
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+        transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+        "&:hover": {
+          transform: "scale(1.05)",
+        },
+      }}
+    >
       <CardContent sx={{ textAlign: 'center', backgroundColor: 'rgba(204, 255, 0, 0.7)' }}>
         <Typography variant="body1" color="#04233A" fontWeight='bold' textAlign='center'>
           {product.name}
@@ -43,7 +59,7 @@ const ProductCard = ({ product, category }) => {
           <IconButton aria-label="añadir a favoritos">
             <FavoriteBorderOutlinedIcon sx={{ color: "red", bgcolor: "transparent" }} />
           </IconButton>
-          <IconButton aria-label="añadir al carrito">
+          <IconButton aria-label="añadir al carrito" onClick={handleAddToCart}>
             <ShoppingCartIcon sx={{ color: "#04233A" }} />
           </IconButton>
         </Box>

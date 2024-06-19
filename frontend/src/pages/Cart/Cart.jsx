@@ -13,11 +13,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import "./Cart.css";
 
 const Cart = () => {
-  const { cart, removeFromCart } = useCart();
-  const total = cart.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+  const { cart, removeFromCart, clearCart } = useCart();
+  const total = cart.reduce((acc, item) => acc + item.price * item.cantidad, 0);
 
   if (cart.length === 0) {
     return (
@@ -54,22 +53,22 @@ const Cart = () => {
                 <CardMedia
                   component="img"
                   sx={{ width: 151 }}
-                  image={item.imagen}
-                  alt={item.nombre}
+                  image={item.image_url}
+                  alt={item.name}
                 />
                 <Box
                   sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
                 >
                   <CardContent sx={{ flex: "1 0 auto" }}>
                     <Typography component="div" variant="h5">
-                      {item.nombre}
+                      {item.name}
                     </Typography>
                     <Typography
                       variant="subtitle1"
                       color="text.secondary"
                       component="div"
                     >
-                      {`${item.precio.toFixed(2)} €`}
+                      {`${item.price.toFixed(2)} €`}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -107,6 +106,20 @@ const Cart = () => {
               Total (impuestos inc.): {total.toFixed(2)} €
             </Typography>
             <Button
+              onClick={clearCart}
+              variant="contained"
+              sx={{
+                width: "100%",
+                marginTop: 2,
+                backgroundColor: "#CCFF00",
+                color: "#04233A",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "#e9ff60" },
+              }}
+            >
+              Vaciar Carrito
+            </Button>
+            <Button
               component={Link}
               to="/finalizar-compra"
               variant="contained"
@@ -115,7 +128,7 @@ const Cart = () => {
                 marginTop: 2,
                 backgroundColor: "#CCFF00",
                 color: "#04233A",
-                fontWeight:'bold',
+                fontWeight: "bold",
                 "&:hover": { backgroundColor: "#e9ff60" },
               }}
             >

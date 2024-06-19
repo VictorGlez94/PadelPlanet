@@ -8,36 +8,7 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      nombre: "Producto 1",
-      precio: 10,
-      cantidad: 1,
-      imagen: "https://via.placeholder.com/150",
-    },
-    {
-      id: 2,
-      nombre: "Producto 2",
-      precio: 20,
-      cantidad: 1,
-      imagen: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      nombre: "Producto 3",
-      precio: 20,
-      cantidad: 1,
-      imagen: "https://via.placeholder.com/150",
-    },
-    {
-      id: 4,
-      nombre: "Producto 4",
-      precio: 20,
-      cantidad: 1,
-      imagen: "https://via.placeholder.com/150",
-    },
-  ]);
+  const [cart, setCart] = useState([]);
 
   const addToCart = (product) => {
     const existingIndex = cart.findIndex((item) => item.id === product.id);

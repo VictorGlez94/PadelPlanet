@@ -13,7 +13,7 @@ function Payment() {
 
   useEffect(() => {
     const calculateTotal = () => {
-      return cart.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+      return cart.reduce((acc, item) => acc + item.price * item.cantidad, 0);
     };
 
     setTotal(calculateTotal());
