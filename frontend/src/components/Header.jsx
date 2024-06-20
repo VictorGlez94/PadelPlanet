@@ -1,24 +1,28 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Link } from "react-router-dom";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Avatar,
+  Button,
+  Tooltip,
+  MenuItem,
+  Badge,
+} from "@mui/material";
+import { styled } from "@mui/system";
+import logo from "/src/assets/images/logo.png";
+import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import Badge from "@mui/material/Badge";
-import { styled } from "@mui/system";
-import logo from "/src/assets/images/logo.png";
-import { useCart } from "../context/CartContext";
 
 const IconStyle = {
   color: "#CCFF00",
@@ -47,43 +51,9 @@ const StyledMenu = styled(Menu)({
   },
 });
 
-const pages = [
-  {
-    to: "/perfil/productos-en-venta",
-    title: "Productos en venta",
-    icon: <StorefrontOutlinedIcon sx={IconStyle} />,
-  },
-  {
-    to: "/perfil/favoritos",
-    title: "Mis favoritos",
-    icon: <FavoriteBorderOutlinedIcon sx={IconStyle} />,
-  },
-  {
-    component: (
-      <Link to="/perfil/nuevo-producto" style={{ textDecoration: "none" }}>
-        <Button key="add-product-button" sx={addButtonStyle}>
-          <DriveFolderUploadOutlinedIcon sx={{ mr: 0.5 }} />
-          Añadir Producto
-        </Button>
-      </Link>
-    ),
-  },
-  {
-    to: "/perfil/carrito",
-    title: "Carrito",
-    icon: <ShoppingCartOutlinedIcon sx={IconStyle} />,
-  },
-];
-
-const settings = [
-  { to: "/perfil", label: "Mi Perfil" },
-  { to: "/perfil/favoritos", label: "Mis Favoritos" },
-  { to: "/perfil/productos-en-venta", label: "Productos en venta" },
-  { to: "/", label: "Cerrar Sesión" },
-];
-
-function Header() {
+const Header = () => {
   const { cartItemCount } = useCart();
+  const { isAuthenticated, login, logout } = useAuth();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -94,6 +64,81 @@ function Header() {
     setAnchorElUser(null);
   };
 
+  const handleLogout = () => {
+    logout();
+  };
+
+  const pages = isAuthenticated
+    ? [
+        {
+          to: "/perfil/productos-en-venta",
+          title: "Productos en venta",
+          icon: <StorefrontOutlinedIcon sx={IconStyle} />,
+        },
+        {
+          to: "/perfil/favoritos",
+          title: "Mis favoritos",
+          icon: <FavoriteBorderOutlinedIcon sx={IconStyle} />,
+        },
+        {
+          component: (
+            <Link to="/perfil/nuevo-producto" style={{ textDecoration: "none" }}>
+              <Button key="add-product-button" sx={addButtonStyle}>
+                <DriveFolderUploadOutlinedIcon sx={{ mr: 0.5 }} />
+                Añadir Producto
+              </Button>
+            </Link>
+          ),
+        },
+        {
+          to: "/perfil/carrito",
+          title: "Carrito",
+          icon: (
+            <Badge badgeContent={cartItemCount} color="primary">
+              <ShoppingCartOutlinedIcon sx={IconStyle} />
+            </Badge>
+          ),
+        },
+      ]
+    : [{
+      to: "/login",
+      title: "Productos en venta",
+      icon: <StorefrontOutlinedIcon sx={IconStyle} />,
+    },
+    {
+      to: "/login",
+      title: "Mis favoritos",
+      icon: <FavoriteBorderOutlinedIcon sx={IconStyle} />,
+    },
+    {
+      component: (
+        <Link to="/login" style={{ textDecoration: "none" }}>
+          <Button key="add-product-button" sx={addButtonStyle}>
+            <DriveFolderUploadOutlinedIcon sx={{ mr: 0.5 }} />
+            Añadir Producto
+          </Button>
+        </Link>
+      ),
+    },
+    {
+      to: "/login",
+      title: "Carrito",
+      icon: (
+        <Badge badgeContent={cartItemCount} color="primary">
+          <ShoppingCartOutlinedIcon sx={IconStyle} />
+        </Badge>
+      ),
+    },];
+
+  const settings = isAuthenticated
+    ? [
+        { to: "/perfil", label: "Mi Perfil" },
+        { to: "/perfil/favoritos", label: "Mis Favoritos" },
+        { to: "/perfil/productos-en-venta", label: "Productos en venta" },
+        { to: "/", label: "Cerrar Sesión" },
+      ]
+    : [{ to: "/login", label: "Iniciar Sesión" }];
+
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#04233A" }}>
       <Container maxWidth="xl">
@@ -101,8 +146,15 @@ function Header() {
           <Link to="/">
             <img src={logo} alt="Logo" style={{ maxWidth: 250 }} />
           </Link>
-          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
-            {pages.map((page, index) => (
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            {pages.map((page, index) =>
               page.component ? (
                 <Box key={index} sx={{ display: "flex", alignItems: "center", mr: 2 }}>
                   {page.component}
@@ -112,23 +164,17 @@ function Header() {
                   <Link to={page.to} style={{ textDecoration: "none" }}>
                     <Tooltip title={page.title}>
                       <IconButton>
-                        {page.to === "/perfil/carrito" ? (
-                          <Badge badgeContent={cartItemCount} color='primary'>
-                            {page.icon}
-                          </Badge>
-                        ) : (
-                          page.icon
-                        )}
+                        {page.icon}
                       </IconButton>
                     </Tooltip>
                   </Link>
                 </Box>
               )
-            ))}
+            )}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar sx={{ bgcolor: "#04233A", color: '#CCFF00' }} />
+              <Avatar sx={{ bgcolor: "#04233A", color: "#CCFF00" }} />
             </IconButton>
             <StyledMenu
               sx={{ mt: "55px" }}
@@ -151,7 +197,7 @@ function Header() {
                   key={index}
                   component={Link}
                   to={setting.to}
-                  onClick={handleCloseUserMenu}
+                  onClick={setting.label === "Cerrar Sesión" ? handleLogout : handleCloseUserMenu}
                   sx={{ backgroundColor: "#e4ff7c", color: "#04233A" }}
                 >
                   <Typography textAlign="center">{setting.label}</Typography>
@@ -163,6 +209,6 @@ function Header() {
       </Container>
     </AppBar>
   );
-}
+};
 
 export default Header;
