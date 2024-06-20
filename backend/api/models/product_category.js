@@ -10,8 +10,18 @@ const ProductsCategory = sequelize.define(
       primaryKey: true,
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM(
+        "Palas",
+        "Zapatillas",
+        "Camisetas",
+        "Pantalones",
+        "Mochilas",
+        "Accesorios"
+      ),
       allowNull: false,
+    },
+    image: {
+      type: DataTypes.STRING
     },
   },
   {
