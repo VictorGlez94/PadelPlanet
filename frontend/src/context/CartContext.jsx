@@ -14,7 +14,15 @@ export const CartProvider = ({ children }) => {
 
 
   const addToCart = (product) => {
-    setCart([...cart, { ...product, cantidad: 1 }]);
+    const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+  
+    if (existingProductIndex !== -1) {
+      const updatedCart = [...cart];
+      updatedCart[existingProductIndex].cantidad += 1;
+      setCart(updatedCart);
+    } else {
+      setCart([...cart, { ...product, cantidad: 1 }]);
+    }
   };
 
   const removeFromCart = (productId) => {
@@ -22,24 +30,17 @@ export const CartProvider = ({ children }) => {
     setCart(updatedCart);
   };
 
-  const toggleFavorite = (productId) => {
-    const isFavorite = favorites.some((item) => item.id === productId);
+  const toggleFavorite = (product) => {
+    const isFavorite = favorites.some((item) => item.id === product.id);
 
     if (isFavorite) {
-      const updatedFavorites = favorites.filter((item) => item.id !== productId);
+      const updatedFavorites = favorites.filter((item) => item.id !== product.id);
       setFavorites(updatedFavorites);
     } else {
-      const productToAdd = cart.find((item) => item.id === productId);
-      if (productToAdd) {
-        setFavorites([...favorites, { ...productToAdd, favorite: true }]);
-      } else {
-        // Aquí puedes manejarlo si el producto no está en el carrito pero se marca como favorito
-        // Por ejemplo, podrías hacer una llamada a una API o a un backend para guardar el favorito
-        // Esto depende de cómo manejes la persistencia de datos.
-        console.log("Producto no está en el carrito pero se marca como favorito:", productId);
-      }
+      setFavorites([...favorites, { ...product, favorite: true }]);
     }
   };
+
 
   const clearCart = () => {
     setCart([]);

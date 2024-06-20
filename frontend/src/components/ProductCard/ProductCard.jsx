@@ -35,7 +35,7 @@ const ProductCard = ({ product, category }) => {
 
   const handleToggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    toggleFavorite(product.id); // Llama a toggleFavorite con el ID del producto
+    toggleFavorite(product); 
   };
 
   if (category && product.category !== category) {
