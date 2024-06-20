@@ -72,7 +72,7 @@ const ProductCard = ({ product, category }) => {
         component="img"
         image={product.image_url}
         alt={product.name}
-        sx={{ maxHeight: "100%", maxWidth: "100%", objectFit: "cover" }}
+        sx={{ maxHeight: "100%", maxWidth: "100%", marginTop: '8px', objectFit: "cover" }}
       />
       <CardContent sx={{ textAlign: "center" }}>
         <Typography

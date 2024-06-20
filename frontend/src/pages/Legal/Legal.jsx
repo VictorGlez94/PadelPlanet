@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 
 function Legal() {
   return (
-    <Typography>
+    <Typography sx={{ mb: 10}}>
       <div className="container">
         <h1>Aviso Legal</h1>
         <p>

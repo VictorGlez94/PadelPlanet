@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 
 function PrivacyPolicy() {
   return (
-    <Typography>
+    <Typography sx={{ mb: 10}}>
     <div className="container">
       <h1>Política de Privacidad</h1>
 
