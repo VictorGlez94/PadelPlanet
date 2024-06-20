@@ -23,7 +23,9 @@ const ProductCard = ({ product, category }) => {
     locale: es,
   });
   const { addToCart, toggleFavorite, favorites } = useCart();
-  const [isFavorite, setIsFavorite] = useState(() => favorites.some((item) => item.id === product.id));
+  const [isFavorite, setIsFavorite] = useState(() =>
+    favorites.some((item) => item.id === product.id)
+  );
 
   useEffect(() => {
     setIsFavorite(favorites.some((item) => item.id === product.id));
@@ -35,7 +37,7 @@ const ProductCard = ({ product, category }) => {
 
   const handleToggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    toggleFavorite(product); 
+    toggleFavorite(product);
   };
 
   if (category && product.category !== category) {
@@ -64,6 +66,9 @@ const ProductCard = ({ product, category }) => {
           color="#04233A"
           fontWeight="bold"
           textAlign="center"
+          maxHeight="25px"
+          overflow="hidden"
+          textOverflow="ellipsis"
         >
           {product.name}
         </Typography>
@@ -72,7 +77,12 @@ const ProductCard = ({ product, category }) => {
         component="img"
         image={product.image_url}
         alt={product.name}
-        sx={{ maxHeight: "100%", maxWidth: "100%", marginTop: '8px', objectFit: "cover" }}
+        sx={{
+          maxHeight: "100%",
+          maxWidth: "100%",
+          marginTop: "8px",
+          objectFit: "cover",
+        }}
       />
       <CardContent sx={{ textAlign: "center" }}>
         <Typography
@@ -89,11 +99,16 @@ const ProductCard = ({ product, category }) => {
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: "55px" }}>
-          <IconButton aria-label="añadir a favoritos" onClick={handleToggleFavorite}>
+          <IconButton
+            aria-label="añadir a favoritos"
+            onClick={handleToggleFavorite}
+          >
             {isFavorite ? (
               <FavoriteIcon sx={{ color: "red", bgcolor: "transparent" }} />
             ) : (
-              <FavoriteBorderOutlinedIcon sx={{ color: "red", bgcolor: "transparent" }} />
+              <FavoriteBorderOutlinedIcon
+                sx={{ color: "red", bgcolor: "transparent" }}
+              />
             )}
           </IconButton>
           <IconButton aria-label="añadir al carrito" onClick={handleAddToCart}>
@@ -106,7 +121,9 @@ const ProductCard = ({ product, category }) => {
           textAlign: "center",
           backgroundColor: "rgba(4, 35, 58, 0.3)",
         }}
-        avatar={<Avatar sx={{ bgcolor: "#04233A" }}>{product.name.charAt(0)}</Avatar>}
+        avatar={
+          <Avatar sx={{ bgcolor: "#04233A" }}>{product.name.charAt(0)}</Avatar>
+        }
         title={
           <Typography variant="body2" fontWeight="bold" noWrap>
             {`Publicado ${timeAgo}`}
