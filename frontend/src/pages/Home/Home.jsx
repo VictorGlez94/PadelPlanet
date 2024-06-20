@@ -9,7 +9,6 @@ import CategoryList from '../../components/CategoryList';
 function Home() {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Filtrar productos según el término de búsqueda
   const filteredProducts = productsData.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );

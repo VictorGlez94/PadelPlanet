@@ -20,7 +20,7 @@
         "password": "encryptedpassword2",
         "name": "Jane Smith",
         "birthday": "1990-03-22T00:00:00.000Z",
-        "user_img": null,
+        "user_img": "https://img.freepik.com/foto-gratis/joven-mujer-caucasica-feliz-desnuda_144627-1275.jpg",
         "gender": "female",
         "card_number": "encryptedcard2",
         "phone": "2345678901",

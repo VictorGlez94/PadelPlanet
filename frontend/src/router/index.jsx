@@ -1,99 +1,99 @@
-import { createBrowserRouter } from 'react-router-dom';
-import Root from '../layout/root';
-import Home from '../pages/Home/Home';
-import About from '../pages/About/About';
-import Contact from '../pages/Contact/Contact';
-import PrivacyPolicy from '../pages/Privacy/Privacy';
-import CookiesPolicy from '../pages/Cookies/Cookies';
-import Legal from '../pages/Legal/Legal';
-import Login from '../pages/Login/Login';
-import Signup from '../pages/Signup/Signup';
-import Profile from '../pages/Profile/Profile';
-import NotFound from '../pages/NotFound/NotFound';
-import Favorites from '../pages/Favorites/Favorites';
-import Sales from '../pages/Sales/Sales';
-import NewProduct from '../pages/NewProduct/NewProduct';
-import PaymentMethods from '../pages/PayMethods/PayMethods';
-import Shipping from '../pages/Shipping/Shipping';
-import Cart from '../pages/Cart/Cart';
-import Payment from '../pages/FinalPayment/Payment';
-import CategoryPage from '../pages/CategoryPage/CategoryPage';
+import { createBrowserRouter } from "react-router-dom";
+import Root from "../layout/root";
+import Home from "../pages/Home/Home";
+import About from "../pages/About/About";
+import Contact from "../pages/Contact/Contact";
+import PrivacyPolicy from "../pages/Privacy/Privacy";
+import CookiesPolicy from "../pages/Cookies/Cookies";
+import Legal from "../pages/Legal/Legal";
+import Login from "../pages/Login/Login";
+import Signup from "../pages/Signup/Signup";
+import Profile from "../pages/Profile/Profile";
+import NotFound from "../pages/NotFound/NotFound";
+import Favorites from "../pages/Favorites/Favorites";
+import Sales from "../pages/Sales/Sales";
+import NewProduct from "../pages/NewProduct/NewProduct";
+import PaymentMethods from "../pages/PayMethods/PayMethods";
+import Shipping from "../pages/Shipping/Shipping";
+import Cart from "../pages/Cart/Cart";
+import Payment from "../pages/FinalPayment/Payment";
+import CategoryPage from "../pages/CategoryPage/CategoryPage";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Root />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home />,
       },
       {
-        path: '/sobre-nosotros',
+        path: "/sobre-nosotros",
         element: <About />,
       },
       {
-        path: '/contacto',
+        path: "/contacto",
         element: <Contact />,
       },
       {
-        path: '/privacidad',
+        path: "/privacidad",
         element: <PrivacyPolicy />,
       },
       {
-        path: '/cookies',
+        path: "/cookies",
         element: <CookiesPolicy />,
       },
       {
-        path: '/aviso-legal',
+        path: "/aviso-legal",
         element: <Legal />,
       },
       {
-        path: '/login',
+        path: "/login",
         element: <Login />,
       },
       {
-        path: '/registro',
+        path: "/registro",
         element: <Signup />,
       },
       {
-        path: '/perfil',
+        path: "/perfil",
         element: <Profile />,
       },
       {
-        path: '/perfil/favoritos',
+        path: "/perfil/favoritos",
         element: <Favorites />,
       },
       {
-        path: '/perfil/productos-en-venta',
+        path: "/perfil/productos-en-venta",
         element: <Sales />,
       },
       {
-        path: '/perfil/nuevo-producto',
+        path: "/perfil/nuevo-producto",
         element: <NewProduct />,
       },
       {
-        path: '/metodos-pago',
+        path: "/metodos-pago",
         element: <PaymentMethods />,
       },
       {
-        path: '/envios',
+        path: "/envios",
         element: <Shipping />,
       },
       {
-        path: '/perfil/carrito',
+        path: "/perfil/carrito",
         element: <Cart />,
       },
       {
-        path: '/finalizar-compra',
+        path: "/finalizar-compra",
         element: <Payment />,
       },
       {
-        path: '/categoria/:categoryName',
+        path: "/categoria/:categoryName",
         element: <CategoryPage />,
       },
       {
-        path: '*',
+        path: "*",
         element: <NotFound />,
       },
     ],
