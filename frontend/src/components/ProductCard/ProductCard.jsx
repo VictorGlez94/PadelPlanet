@@ -125,6 +125,7 @@ const ProductCard = ({ product, category }) => {
         sx={{
           textAlign: "center",
           backgroundColor: "rgba(4, 35, 58, 0.3)",
+          maxHeight: 40,
         }}
         avatar={
           <Avatar sx={{ bgcolor: "#04233A" }}>{product.name.charAt(0)}</Avatar>
