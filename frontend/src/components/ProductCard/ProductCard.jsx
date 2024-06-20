@@ -48,6 +48,9 @@ const ProductCard = ({ product, category }) => {
     <Card
       sx={{
         maxWidth: 345,
+        maxHeight: 550,
+        display: 'flex',
+        flexDirection: 'column',
         boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
         transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
         "&:hover": {
@@ -78,10 +81,12 @@ const ProductCard = ({ product, category }) => {
         image={product.image_url}
         alt={product.name}
         sx={{
-          maxHeight: "100%",
-          maxWidth: "100%",
+          maxHeight: '250px',
+          width: "auto",
           marginTop: "8px",
-          objectFit: "cover",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       />
       <CardContent sx={{ textAlign: "center" }}>
