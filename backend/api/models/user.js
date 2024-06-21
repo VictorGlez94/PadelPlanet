@@ -41,6 +41,7 @@ const User = sequelize.define(
     },
     email: {
       type: DataTypes.STRING,
+      unique:true
     },
     address: {
       type: DataTypes.STRING,
@@ -56,14 +57,14 @@ const User = sequelize.define(
   },
   {
     timestamps: false,
-    validate: {
-      genderCheck(){
-        const allowedGenders = ["Hombre", "Mujer", "Otro"];
-        if (!allowedGenders.includes(this.gender)) {
-          throw new Error("Invalid gender");
-        }
-      }
-    }
+    // validate: {
+    //   genderCheck(){
+    //     const allowedGenders = ["Hombre", "Mujer", "Otro"];
+    //     if (!allowedGenders.includes(this.gender)) {
+    //       throw new Error("Invalid gender");
+    //     }
+    //   }
+    // }
   }
 );
 

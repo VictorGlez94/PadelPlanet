@@ -18,6 +18,7 @@ import Shipping from "../pages/Shipping/Shipping";
 import Cart from "../pages/Cart/Cart";
 import Payment from "../pages/FinalPayment/Payment";
 import CategoryPage from "../pages/CategoryPage/CategoryPage";
+import Completion from "../pages/FinalPayment/Completion";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
       {
         path: "/finalizar-compra",
         element: <Payment />,
+      },
+      {
+        path: "/completado",
+        element: <Completion />,
       },
       {
         path: "/categoria/:categoryName",
