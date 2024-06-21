@@ -11,7 +11,7 @@
       "image_url": "https://contents.mediadecathlon.com/p2591711/k$b3ef07f8225aea41d42c2c5597c5d3c7/sq/pala-de-padel-adulto-head-evo-speed.jpg?format=auto&f=800x0",
       "created_at": "2024-06-18T18:56:01.529Z",
       "category": "Palas",
-      "favorite": true
+      "favorite": false
     },
     {
       "id": 5,
@@ -50,7 +50,7 @@
       "description": "This is a product description for product 3",
       "price": 56.465582218799916,
       "product_status_id": 3,
-      "image_url": "https://allforpadel.com/2994-large_default/adidas-rx-300.jpg",
+      "image_url": "https://www.ofertasdepadel.com/68664-large_default/mochila-nox-mm2-pro.jpg",
       "created_at": "2024-06-18T18:56:01.529Z",
       "category": "Pantalones",
       "favorite": false

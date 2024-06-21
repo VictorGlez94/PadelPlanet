@@ -16,7 +16,21 @@ import { useCart } from "../../context/CartContext";
 
 const Cart = () => {
   const { cart, removeFromCart, clearCart } = useCart();
-  const total = cart.reduce((acc, item) => acc + item.price * item.cantidad, 0);
+
+  // Función para calcular el total teniendo en cuenta la cantidad de cada producto
+  const calculateTotal = () => {
+    return cart.reduce((acc, item) => acc + item.price * item.cantidad, 0);
+  };
+
+  // Manejar clic en el botón para eliminar un producto del carrito
+  const handleRemoveFromCart = (productId) => {
+    removeFromCart(productId);
+  };
+
+  // Manejar clic en el botón para vaciar completamente el carrito
+  const handleClearCart = () => {
+    clearCart();
+  };
 
   if (cart.length === 0) {
     return (
@@ -52,30 +66,45 @@ const Cart = () => {
               <Box key={index} sx={{ display: "flex", marginBottom: 2 }}>
                 <CardMedia
                   component="img"
-                  sx={{ width: 151 }}
+                  sx={{ width: 150, maxHeight: 150 }}
                   image={item.image_url}
                   alt={item.name}
                 />
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}
-                >
-                  <CardContent sx={{ flex: "1 0 auto" }}>
-                    <Typography component="div" variant="h5">
+                <Box sx={{ marginLeft: 2 }}>
+                  <CardContent>
+                    <Typography variant="h5" width="250px">
                       {item.name}
                     </Typography>
-                    <Typography
-                      variant="subtitle1"
-                      color="text.secondary"
-                      component="div"
-                    >
+                    <Typography variant="subtitle2" color="text.secondary">
                       {`${item.price.toFixed(2)} €`}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <IconButton onClick={() => removeFromCart(item.id)}>
+                    <IconButton onClick={() => handleRemoveFromCart(item.id)}>
                       <DeleteIcon />
                     </IconButton>
                   </CardActions>
+                </Box>
+                <Box
+                  sx={{
+                    marginLeft: 5,
+                    marginRight: 5,
+                  }}
+                >
+                  <CardContent>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{
+                        mt: 1,
+                        maxHeight: "100px",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {item.description}
+                    </Typography>
+                  </CardContent>
                 </Box>
               </Box>
             ))}
@@ -103,10 +132,10 @@ const Cart = () => {
             </Typography>
             <Typography>Artículos: {cart.length}</Typography>
             <Typography>
-              Total (impuestos inc.): {total.toFixed(2)} €
+              Total (impuestos inc.): {calculateTotal().toFixed(2)} €
             </Typography>
             <Button
-              onClick={clearCart}
+              onClick={handleClearCart}
               variant="contained"
               sx={{
                 width: "100%",

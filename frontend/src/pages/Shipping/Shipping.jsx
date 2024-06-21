@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 
 function Shipping() {
   return (
-    <Typography>
+    <Typography sx={{ mb: 10}}> 
     <div className="container">
     <h1>Política de Envíos y Devoluciones</h1>
     <section>

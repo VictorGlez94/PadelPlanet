@@ -15,16 +15,12 @@ function Home() {
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleCategoryClick = (categoryName) => {
-    console.log(`Filtrar productos por la categoría: ${categoryName}`);
-  };
-
   return (
     <Container className="home-container">
       
       <Typography variant='h3' color='black' textAlign="center" marginTop={'30px'} marginBottom={'30px'}>¿Qué quieres encontrar?</Typography>
       <SearchBar onSearchChange={setSearchTerm} />
-      <CategoryList onCategoryClick={handleCategoryClick} />
+      <CategoryList/>
       <Typography variant='h4' color='black' textAlign="center" marginTop={'30px'} marginBottom={'30px'}>Productos a la venta</Typography>
       <ProductList products={filteredProducts} />
     </Container>

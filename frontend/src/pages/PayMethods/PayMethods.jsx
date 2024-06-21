@@ -31,7 +31,7 @@ const PaymentMethods = () => {
   ];
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, mb: 20 }}>
     <h1>Métodos de pago disponibles</h1>
       <Container maxWidth="xl">
         <Grid container spacing={3}>
