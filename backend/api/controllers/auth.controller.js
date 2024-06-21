@@ -42,7 +42,7 @@ const login = async (req, res) => {
 
 const signup = async (req, res) => {
   try {
-    const hash = bcrypt.genSaltSync(10)
+    const hash = bcrypt.genSaltSync(BCRYPT_ROUNDS);
     const hashedPassword = bcrypt.hashSync(req.body.password, hash);
     const user = await User.create({
       email: req.body.email,
