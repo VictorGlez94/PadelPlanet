@@ -8,7 +8,8 @@ const {
   deleteUser,
   getOwnProfile,
   updateOwnProfile,
-  updatePassword
+  updatePassword,
+  deleteOwnUser
 } = require("../controllers/user");
 
 const {
@@ -17,14 +18,16 @@ const {
   debugging
 } = require('../middlewares/index')
 
-router.get("/", checkAuth, checkAdmin, getAllUsers);
-router.get('/ownProfile', checkAuth, getOwnProfile)
-router.get("/:id", checkAuth, checkAdmin, getOneUser);
-router.post("/", createUser);
-router.put("/:id",checkAuth, updateUser);
+router.get("/", debugging, checkAuth, checkAdmin, getAllUsers);
+router.get("/ownProfile", debugging, checkAuth, getOwnProfile);
+router.get("/:id", debugging, checkAuth, checkAdmin, getOneUser);
+router.post("/",debugging, checkAdmin, createUser);
+router.put("/:id", debugging, checkAuth, checkAdmin, updateUser);
 router.put("/ownProfile/update",debugging, checkAuth, updateOwnProfile);
-router.delete("/:id", deleteUser);
 router.put("/ownProfile/updatePassword", debugging, checkAuth, updatePassword)
+router.delete("/:id",debugging, checkAuth, checkAdmin, deleteUser);
+router.delete("/ownProfile/deletede",debugging, checkAuth, deleteOwnUser);
+
 
 
 

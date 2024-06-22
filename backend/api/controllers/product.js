@@ -36,6 +36,7 @@ async function createProduct(req, res) {
       description: req.body.description,
       price: req.body.price,
       product_status_id: req.body.product_status_id,
+      image_url: req.body.image_url
     });
     return res
       .status(200)

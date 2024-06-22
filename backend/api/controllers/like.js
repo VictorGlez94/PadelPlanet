@@ -58,6 +58,7 @@ async function updateLike(req, res) {
 
 async function deleteLike(req, res) {
   try {
+    
     const like = await Like.destroy({
       where: {
         id: req.params.id,
@@ -73,10 +74,31 @@ async function deleteLike(req, res) {
   }
 }
 
+async function getOwnLikesList(req, res) {
+  try {
+    console.log("aqui", res.locals.user);
+    const likes = await Like.findAll({
+      where: {
+        id: res.locals.user.id,
+      },
+      paranoid: false,
+    });
+    if (likes) {
+      return res.status(200).json(likes);
+    } else {
+      return res.status(404).send("No likes found");
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
+
 module.exports = {
   getAllLikes,
   getOneLike,
   createLike,
   updateLike,
   deleteLike,
+  getOwnLikesList
 };

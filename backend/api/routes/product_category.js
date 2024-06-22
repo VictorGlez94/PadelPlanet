@@ -7,11 +7,12 @@ const {
   updateProductCategory,
   deleteProductCategory,
 } = require("../controllers/product_category");
+const { checkAdmin, checkAuth, debugging } = require("../middlewares");
 
-router.get("/", getAllProductCategories);
-router.get("/:id", getOneProductCategory);
-router.post("/", createProductCategory);
-router.put("/:id", updateProductCategory);
-router.delete("/:id", deleteProductCategory);
+router.get("/", debugging, checkAuth, checkAdmin, getAllProductCategories);
+router.get("/:id", debugging, checkAuth, checkAdmin, getOneProductCategory);
+router.post("/", debugging, checkAuth, checkAdmin, createProductCategory);
+router.put("/:id", debugging, checkAuth, checkAdmin, updateProductCategory);
+router.delete("/:id", debugging, checkAuth, checkAdmin, deleteProductCategory);
 
 module.exports = router;
