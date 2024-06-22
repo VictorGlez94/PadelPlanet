@@ -92,78 +92,8 @@ Post
 |--------|-----------------|-------|--------|---------------------------|------------------------------------|-------------------------------|
 | GET    | /post          | SÍ    | admin   | Lista de todos los posts  |                                       | [{post}]                      |
 | GET    | /post/:id      | SÍ    | admin   | Obtener un solo post |                              | {post}                        |
-| POST   | /post          | SÍ    | admin  | Añade un nuevo post         | seller_id, name, brand, category_id, description, price, product_status_id, image_url| {message: 'Product created'} |
-| POST   | /createPostWithProduct          | SÍ    | user  | Añade un nuevo post con producto         | seller_id, name, brand, category_id, description, price, product_status_id, image_url| {message: 'Product created'} |
-| PUT    | /post/:id      | SÍ    | admin  | Actualiza el post |  seller_id, name, brand, category_id, description, price, product_status_id, image_url  | {message: 'Product updated'}|
-| DELETE | /post/:id      | SÍ    | admin  | Elimina un post              |                                    | {message: 'Product deleted'}   |
-
-
-
-Vinos
-
-
-| METHOD | ENDPOINT        | TOKEN | ROLE   | DESCRIPTION               | POST PARAMS                        | RETURNS                       |
-|--------|-----------------|-------|--------|---------------------------|------------------------------------|-------------------------------|
-| GET    | /vinos          | SÍ    | user   | Lista todos los vinos     |                                    | [{vino}]                      |
-| GET    | /vinos/:id      | SÍ    | user   | Obtiene detalles de un vino|                                   | {vino}                        |
-| POST   | /vinos          | SÍ    | Owner  | Añade un nuevo vino       | nombre, año, tipo, descripción, precio, stock | {message: ' añadido'} |
-| PUT    | /vinos/:id      | SÍ    | Owner  | Actualiza un vino         | nombre, año, tipo, descripción, precio, stock | {message: 'Vino actualizado'}|
-| DELETE | /vinos/:id      | SÍ    | Owner  | Elimina un vino           |                                    | {message: 'Vino eliminado'}   |
-
-
-Bodegas
-
-| MÉTODO | ENDPOINT        | TOKEN | ROL       | DESCRIPCIÓN              | PARÁMETROS POST           | DEVUELVE                       |
-|--------|-----------------|-------|-----------|--------------------------|---------------------------|-------------------------------|
-| GET    | /bodegas        | SÍ    | user      | Listar todas las bodegas | -                         | [{bodega}]                    |
-| GET    | /bodegas/:id    | SÍ    | user      | Obtener una bodega       | -                         | {bodega}                      |
-| POST   | /bodegas        | SÍ    | owner     | Crear una bodega       | nombre, direccion         | {bodega}                      |
-| PUT    | /bodegas/:id    | SÍ    | owner     | Actualizar una bodega   | nombre, direccion         | {mensaje: 'Bodega actualizada'} |
-| DELETE | /bodegas/:id    | SÍ    | owner     | Eliminar una bodega     | -                         | {mensaje: 'Bodega eliminada'} |
-
-
-
-Reservas
-
-
-| METHOD | ENDPOINT           | TOKEN | ROLE   | DESCRIPTION                | POST PARAMS                | RETURNS                         |
-|--------|--------------------|-------|--------|----------------------------|----------------------------|---------------------------------|
-| GET    | /reservas          | SÍ    | Admin  | Lista todas las reservas   |                            | [{reserva}]                     |
-| POST   | /reservas          | SÍ    | user   | Permite hacer una reserva  | fechaHora, numeroPersonas  | {reserva}                       |
-| GET    | /reservas/:id      | SÍ    | user   | Obtiene detalles reserva   |                            | {reserva}                       |
-| PUT    | /reservas/:id      | SÍ    | user   | Actualiza una reserva      | fechaHora, numeroPersonas  | {message: 'Reserva actualizada'}|
-| DELETE | /reservas/:id      | SÍ    | user   | Cancela una reserva        |                            | {message: 'Reserva cancelada'}  |
-
-
-Tour
-
-| MÉTODO | ENDPOINT       | TOKEN | ROL       | DESCRIPCIÓN               | PARÁMETROS POST                         | DEVUELVE                       |
-|--------|----------------|-------|-----------|---------------------------|-----------------------------------------|-------------------------------|
-| GET    | /tours         | SÍ    | user     | Listar todos los tours     | -                                       | [{tour}]                      |
-| GET    | /tours/:id     | SÍ    | user     | Obtener detalles de un tour| -                                       | {tour}                        |
-| POST   | /tours         | SÍ    | owner    | Crear un tour                 | franja_horaria, max_personas, id_bodega | {tour}                        |
-| PUT    | /tours/:id     | SÍ    | owner    | Actualizar un tour            | franja_horaria, max_personas            | {mensaje: 'Tour actualizado'} |
-| DELETE | /tours/:id     | SÍ    | owner    | Eliminar un tour              | -                                       | {mensaje: 'Tour eliminado'}   |
-| GET    | /tours/:idowner | SÍ    | owner    | Listar todos mis tours      | -                                       | [{tour}]                      |
-
-
-
-Pedidos
-
-| METHOD | ENDPOINT        | TOKEN | ROLE   | DESCRIPTION                      | POST PARAMS                | RETURNS                         |
-|--------|-----------------|-------|--------|----------------------------------|----------------------------|---------------------------------|
-| POST   | /pedidos        | SÍ    | user   | Crea nuevo pedido desde carrito  |                            | {pedido}                        |
-| GET    | /pedidos/:id    | SÍ    | user   | Muestra detalles de un pedido    |                            | {pedido}                        |
-| PUT    | /pedidos/:id    | SÍ    | Admin  | Actualiza el estado de un pedido | estadoPedido               | {message: 'Pedido actualizado'} |
-| DELETE | /pedidos/:id    | SÍ    | Admin  | Cancela un pedido                |                            | {message: 'Pedido cancelado'}   |
-
-
-Comentarios y Calificaciones
-
-
-| METHOD | ENDPOINT                       | TOKEN | ROLE   | DESCRIPTION                      | POST PARAMS                 | RETURNS                            |
-|--------|--------------------------------|-------|--------|----------------------------------|-----------------------------|------------------------------------|
-| POST   | /vinos/:id_vino/comentarios    | SÍ    | user| Permite comentar sobre un vino   | textoComentario             | {comentario}                        |
-| GET    | /vinos/:id_vino/comentarios    | SÍ   | user  | Lista comentarios de un vino     |                             | [{comentario}]                      |
-| POST   | /vinos/:id_vino/calificaciones | SÍ   | user| Permite calificar un vino        | puntuacion                  | {calificacion}                      |
-| GET    | /vinos/:id_vino/calificaciones |SÍ   | user  | Lista calificaciones de un vino|                             | [{calificacion}]                    |
+| GET    | /post/getMyPosts      | SÍ    | user   | Obtener todos mis posts |                              | [{post}]                       |
+| POST   | /post          | SÍ    | admin  | Añade un nuevo post         | name, brand, category_id, description, price, product_status_id, image_url| {message: 'Product created'} |
+| POST   | /createPostWithProduct          | SÍ    | user  | Añade un nuevo post con producto         | seller_id, name, brand, category_id, description, price, product_status_id, image_url, sell_status| {message: 'Product created'} |
+| PUT    | /post/:id      | SÍ    | admin  | Actualiza el post |  seller_id, name, brand, category_id, description, price, product_status_id, image_url  | {message: 'post updated'}|
+| DELETE | /post/:id      | SÍ    | admin  | Elimina un post              |                                    | {message: 'Post deleted'}   |
