@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -18,6 +18,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/system";
 import logo from "/src/assets/images/logo.png";
+import { useCart } from "../context/CartContext";
 
 const IconStyle = {
   color: "#CCFF00",
@@ -82,8 +83,8 @@ const settings = [
 ];
 
 function Header() {
+  const { cartItemCount } = useCart();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [cartItemCount, setCartItemCount] = React.useState(3);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -94,7 +95,7 @@ function Header() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#04233A", marginBottom: "20px" }}>
+    <AppBar position="sticky" sx={{ backgroundColor: "#04233A" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to="/">

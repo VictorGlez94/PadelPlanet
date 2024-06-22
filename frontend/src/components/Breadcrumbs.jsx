@@ -9,6 +9,7 @@ const StyledBreadcrumbs = styled(Breadcrumbs)({
   backgroundColor: '#f0f0f0',
   padding: '10px 215px',
   borderRadius: '4px',
+  marginTop: '15px',
   marginBottom: '10px',
 });
 
@@ -23,7 +24,7 @@ function BreadcrumbsComponent() {
   return (
     <StyledBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
       <Link component={RouterLink} to="/" color="inherit" underline="none">
-        <HomeIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '4px' }} /> {/* Icono de Home */}
+        <HomeIcon fontSize="small" style={{ verticalAlign: 'middle', marginRight: '4px' }} />
         Inicio
       </Link>
       {pathnames.map((path, index) => {
