@@ -15,7 +15,7 @@ const User = sequelize.define(
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING,
@@ -24,31 +24,47 @@ const User = sequelize.define(
     birthday: {
       type: DataTypes.DATE,
     },
+    user_img: {
+      type: DataTypes.STRING,
+      // defaultValue: 'asdasd'
+    },
     gender: {
-      type: DataTypes.ENUM("male", "female", "other"),
+      type: DataTypes.STRING,
     },
     card_number: {
       type: DataTypes.STRING,
+      allowNull: true,
+      // defaultValue: "XXXXX",
     },
     phone: {
       type: DataTypes.BIGINT,
     },
     email: {
       type: DataTypes.STRING,
+      unique:true
     },
     address: {
       type: DataTypes.STRING,
     },
     role_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      defaultValue: 2,
     },
     created_at: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      // defaultValue: DataTypes.NOW,
     },
   },
   {
     timestamps: false,
+    // validate: {
+    //   genderCheck(){
+    //     const allowedGenders = ["Hombre", "Mujer", "Otro"];
+    //     if (!allowedGenders.includes(this.gender)) {
+    //       throw new Error("Invalid gender");
+    //     }
+    //   }
+    // }
   }
 );
 

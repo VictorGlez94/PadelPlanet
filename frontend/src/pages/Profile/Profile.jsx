@@ -1,27 +1,36 @@
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import ProfileCard from '../../components/ProfileCard/ProfileCard';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 
 function Profile() {
-  const initialUserData = {
-    usuario: 'john_doe',
-    nombre: 'John Doe',
-    fechaNacimiento: '1990-01-01',
-    telefono: '123456789',
-    direccion: '123 Main St',
-    genero: 'hombre',
-    email: 'john@example.com',
-    cardnumber: '1234 5678 9101 1121',
-    foto: '',
-  };
+  const [userData, setUserData] = useState(null);
 
-  const [userData, setUserData] = useState(initialUserData);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setUserData({
+        usuario: user.username || '',
+        nombre: user.name || '',
+        fechaNacimiento: user.birthday || '',
+        telefono: user.phone || '',
+        direccion: user.address || '',
+        genero: user.gender || '',
+        email: user.email || '',
+        cardnumber: user.card_number || '',
+        foto: user.user_img || '',
+      });
+    }
+  }, []);
 
   const handleSave = (updatedData) => {
     setUserData(updatedData);
+    localStorage.setItem('user', JSON.stringify(updatedData));
   };
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Container>
@@ -35,4 +44,3 @@ function Profile() {
 }
 
 export default Profile;
-

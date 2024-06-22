@@ -1,3 +1,4 @@
+// CartContext.js
 import { createContext, useState, useContext } from "react";
 import PropTypes from "prop-types";
 
@@ -9,12 +10,14 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+
 
   const addToCart = (product) => {
-    const existingIndex = cart.findIndex((item) => item.id === product.id);
-    if (existingIndex !== -1) {
+    const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+  
+    if (existingProductIndex !== -1) {
       const updatedCart = [...cart];
-      updatedCart[existingIndex].cantidad += 1;
       setCart(updatedCart);
     } else {
       setCart([...cart, { ...product, cantidad: 1 }]);
@@ -26,6 +29,18 @@ export const CartProvider = ({ children }) => {
     setCart(updatedCart);
   };
 
+  const toggleFavorite = (product) => {
+    const isFavorite = favorites.some((item) => item.id === product.id);
+
+    if (isFavorite) {
+      const updatedFavorites = favorites.filter((item) => item.id !== product.id);
+      setFavorites(updatedFavorites);
+    } else {
+      setFavorites([...favorites, { ...product, favorite: true }]);
+    }
+  };
+
+
   const clearCart = () => {
     setCart([]);
   };
@@ -34,8 +49,10 @@ export const CartProvider = ({ children }) => {
 
   const value = {
     cart,
+    favorites,
     addToCart,
     removeFromCart,
+    toggleFavorite,
     clearCart,
     cartItemCount,
   };
