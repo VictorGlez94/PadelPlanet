@@ -18,6 +18,7 @@ import Shipping from "../pages/Shipping/Shipping";
 import Cart from "../pages/Cart/Cart";
 import Payment from "../pages/FinalPayment/Payment";
 import CategoryPage from "../pages/CategoryPage/CategoryPage";
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -92,6 +93,9 @@ const router = createBrowserRouter([
         path: "/categoria/:categoryName",
         element: <CategoryPage />,
       },
+      { path: '/cambiar-password', 
+        element: <ResetPassword />
+       },
       {
         path: "*",
         element: <NotFound />,
