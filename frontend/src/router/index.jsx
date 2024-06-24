@@ -20,6 +20,7 @@ import Payment from "../pages/FinalPayment/Payment";
 import CategoryPage from "../pages/CategoryPage/CategoryPage";
 import Completion from "../pages/FinalPayment/Completion";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
+import ProductPage from "../pages/ProductPage/ProductPage";
 
 const router = createBrowserRouter([
   {
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
       {
         path: "/categoria/:categoryName",
         element: <CategoryPage />,
+      },
+      {
+        path: "/producto/:productName",
+        element: <ProductPage />,
       },
       { path: '/cambiar-password', 
         element: <ResetPassword />

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 // ProductCard.jsx
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -40,6 +41,10 @@ const ProductCard = ({ product, category }) => {
     toggleFavorite(product);
   };
 
+  const formatProductName = (name) => {
+    return name.toLowerCase().replace(/\s+/g, "-");
+  };
+
   if (category && product.category !== category) {
     return null;
   }
@@ -76,6 +81,7 @@ const ProductCard = ({ product, category }) => {
           {product.name}
         </Typography>
       </CardContent>
+      <Link to={`/producto/${formatProductName(product.name)}`} style={{ textDecoration: "none" }}>
       <CardMedia
         component="img"
         image={product.image_url}
@@ -87,8 +93,10 @@ const ProductCard = ({ product, category }) => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          cursor: "pointer",
         }}
       />
+      </Link>
       <CardContent sx={{ textAlign: "center" }}>
         <Typography
           variant="body1"

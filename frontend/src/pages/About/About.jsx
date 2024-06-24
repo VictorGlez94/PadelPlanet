@@ -2,30 +2,31 @@ import { useState, useEffect } from "react";
 import "./About.css";
 import { Box, Typography } from "@mui/material";
 
-const testimonies = [
-  {
-    name: "Laura Martínez",
-    text: "¡PadelPlanet ha revolucionado mi forma de comprar equipamiento deportivo! Encontré justo lo que necesitaba y a un precio inmejorable.",
-  },
-  {
-    name: "Miguel Torres",
-    text: "Me encanta la facilidad con la que pude vender mi vieja pala de pádel. ¡Y el dinero extra vino perfecto para comprar una nueva!",
-  },
-  {
-    name: "Ana García",
-    text: "El servicio al cliente es increíble. Tuve un pequeño problema con mi pedido y lo resolvieron rápidamente. ¡Muy recomendable!",
-  },
-  {
-    name: "Carlos Fernández",
-    text: "La variedad de productos es asombrosa y todos en excelente estado. Definitivamente, seguiré comprando en PadelPlanet.",
-  },
-  {
-    name: "Lucía Rodríguez",
-    text: "La comunidad de PadelPlanet es genial. He conocido a muchos jugadores apasionados y he encontrado todo el equipo que necesito.",
-  },
-];
 
 function About() {
+  const testimonies = [
+    {
+      name: "Laura Martínez",
+      text: "¡PadelPlanet ha revolucionado mi forma de comprar equipamiento deportivo! Encontré justo lo que necesitaba y a un precio inmejorable.",
+    },
+    {
+      name: "Miguel Torres",
+      text: "Me encanta la facilidad con la que pude vender mi vieja pala de pádel. ¡Y el dinero extra vino perfecto para comprar una nueva!",
+    },
+    {
+      name: "Ana García",
+      text: "El servicio al cliente es increíble. Tuve un pequeño problema con mi pedido y lo resolvieron rápidamente. ¡Muy recomendable!",
+    },
+    {
+      name: "Carlos Fernández",
+      text: "La variedad de productos es asombrosa y todos en excelente estado. Definitivamente, seguiré comprando en PadelPlanet.",
+    },
+    {
+      name: "Lucía Rodríguez",
+      text: "La comunidad de PadelPlanet es genial. He conocido a muchos jugadores apasionados y he encontrado todo el equipo que necesito.",
+    },
+  ];
+
   const [currentTestimony, setCurrentTestimony] = useState(0);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ function About() {
       setCurrentTestimony((prev) => (prev + 1) % testimonies.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [testimonies.length]);
 
   return (
     <Box sx={{ mb: 10 }}>
