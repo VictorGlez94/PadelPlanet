@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const Post = require("../models/post");
 const Product = require("../models/product");
 
@@ -118,11 +119,32 @@ async function createPostWithProduct(req, res) {
   }
 }
 
+async function getAllMyPosts(req, res) {
+  try {
+    const products = await Product.findAll({
+      where:{
+        seller_id: res.locals.user.id
+    }});
+    const productIds = products.map((product) => product.id);
+
+    const posts = await Post.findAll({where:{product_id: productIds}});
+
+    if (posts) {
+      return res.status(200).json(posts);
+    } else {
+      return res.status(404).send("No posts found");
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   getAllPosts,
   getOnePost,
   createPost,
   updatePost,
   deletePost,
-  createPostWithProduct
+  createPostWithProduct,
+  getAllMyPosts
 };

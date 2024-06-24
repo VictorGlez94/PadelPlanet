@@ -7,11 +7,12 @@ const {
   updateProductStatus,
   deleteProductStatus,
 } = require("../controllers/product_status");
+const { debugging, checkAuth, checkAdmin } = require("../middlewares");
 
-router.get("/", getAllProductStatuses);
-router.get("/:id", getOneProductStatus);
-router.post("/", createProductStatus);
-router.put("/:id", updateProductStatus);
-router.delete("/:id", deleteProductStatus);
+router.get("/", debugging, checkAuth, checkAdmin, getAllProductStatuses);
+router.get("/:id", debugging, checkAuth, checkAdmin, getOneProductStatus);
+router.post("/", debugging, checkAuth, checkAdmin, createProductStatus);
+router.put("/:id", debugging, checkAuth, checkAdmin, updateProductStatus);
+router.delete("/:id", debugging, checkAuth, checkAdmin, deleteProductStatus);
 
 module.exports = router;
