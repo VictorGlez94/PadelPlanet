@@ -103,22 +103,10 @@ async function createPostWithProduct(req, res) {
       product_status_id: req.body.product_status_id,
       image_url: req.body.image_url,
     });
-
-    // Create the Post using the product_id from the newly created Product
-    const newPost = await Post.create({
-      product_id: newProduct.id, 
-      sell_status: "Disponible"
+    
+    const newPost = await newProduct.createPost({
+      sell_status: "Disponible",
     });
-    // const post = await Post.createProduct({
-    //   seller_id: user.id,
-    //   name: req.body.name,
-    //   brand: req.body.brand,
-    //   category_id: req.body.category_id,
-    //   price: req.body.price,
-    //   product_status_id: req.body.product_status_id,
-    //   image_url: req.body.image_url,
-    // });
-    // console.log(post)
 
     if (newPost) {
       return res.status(200).json("Post created with product");

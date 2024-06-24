@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Container, Typography} from '@mui/material';
 import SearchBar from '../../components/SearchBar';
 import ProductList from '../../components/ProductList/ProductList';
-import productsData from '/home/victor/code/final-project/PadelPlanet/frontend/src/assets/db/products.json';
+// import productsData from '/home/victor/code/final-project/PadelPlanet/frontend/src/assets/db/products.json';
+import productsData from "../../assets/db/products.json";
+
 import './Home.css';
 import CategoryList from '../../components/CategoryList';
 

@@ -7,19 +7,24 @@ const {
   updateUser,
   deleteUser,
   getOwnProfile,
+  updateOwnProfile,
+  updatePassword
 } = require("../controllers/user");
 
 const {
   checkAuth,
-  checkAdmin
+  checkAdmin,
+  debugging
 } = require('../middlewares/index')
 
 router.get("/", checkAuth, checkAdmin, getAllUsers);
-router.get('/profile', checkAuth, getOwnProfile)
+router.get('/ownProfile', checkAuth, getOwnProfile)
 router.get("/:id", checkAuth, checkAdmin, getOneUser);
 router.post("/", createUser);
-router.put("/:id", updateUser);
+router.put("/:id",checkAuth, updateUser);
+router.put("/ownProfile/update",debugging, checkAuth, updateOwnProfile);
 router.delete("/:id", deleteUser);
+router.put("/ownProfile/updatePassword", debugging, checkAuth, updatePassword)
 
 
 

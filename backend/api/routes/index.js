@@ -8,5 +8,6 @@ router.use("/product", require("./product"));
 router.use("/role", require("./role"));
 router.use("/user", require("./user"));
 router.use('/auth', require("./auth.router"));
+router.use('/payment', require("./payment"));
 
 module.exports = router;

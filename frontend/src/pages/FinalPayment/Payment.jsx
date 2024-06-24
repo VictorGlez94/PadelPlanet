@@ -4,6 +4,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useCart } from "../../context/CartContext";
 import { Box, Typography } from "@mui/material";
 import CheckoutForm from "./CheckoutForm";
+import {api} from "../../services/config";
+
 
 function Payment() {
   const { cart } = useCart();
@@ -13,6 +15,7 @@ function Payment() {
 
   useEffect(() => {
     const calculateTotal = () => {
+      
       return cart.reduce((acc, item) => acc + item.price * item.cantidad, 0);
     };
 
@@ -20,10 +23,14 @@ function Payment() {
   }, [cart]);
 
   useEffect(() => {
-    fetch("/config")
-      .then(async (r) => {
-        const { publishableKey } = await r.json();
+    console.log(api.getUri)
+    api
+      .get("payment/config")
+      .then((response) => {
+        console.log(response)
+        const { publishableKey } = response.data;
         setStripePromise(loadStripe(publishableKey));
+
       })
       .catch((error) => {
         console.error("Error fetching Stripe config:", error);
@@ -31,19 +38,17 @@ function Payment() {
   }, []);
 
   useEffect(() => {
+    console.log(api.getUri);
     if (total > 0) {
-      fetch("/create-payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ amount: total * 100 }), // Asegúrate de que el servidor espere el monto en centavos
-      })
-        .then(async (result) => {
-          if (!result.ok) {
-            throw new Error("Error al obtener el cliente secreto");
-          }
-          const { clientSecret } = await result.json();
+      api
+        .post("payment/create-payment-intent", {
+          amount: total * 100,
+          currency: "EUR",
+          receiptEmail: "jdanielperez@outlook.es",
+        })
+        .then((response) => {
+          console.log(response);
+          const { clientSecret } = response.data;
           setClientSecret(clientSecret);
         })
         .catch((error) => {
@@ -52,14 +57,15 @@ function Payment() {
     }
   }, [total]);
 
-  /*
+  
   if (!stripePromise) {
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography variant="h4">Cargando...</Typography>
       </Box>
     );
-  }*/ 
+  }
+  
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
