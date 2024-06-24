@@ -13,27 +13,43 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 // import users from '/home/victor/code/final-project/PadelPlanet/frontend/src/assets/db/users.json';  // Asumiendo que el archivo JSON está en el mismo directorio
-import users from '../../../src/assets/db/users.json';  // Asumiendo que el archivo JSON está en el mismo directorio
+// import users from '../../../src/assets/db/users.json';  // Asumiendo que el archivo JSON está en el mismo directorio
+import { useAuth } from '../../context/AuthContext';
 
 
 export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const { login, isAuthenticated } = useAuth();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
-    const password = data.get('password');
+    const password = data.get("password");
 
-    const user = users.find(user => user.email === email);
+    try {
+      await login(email, password);
+      console.log(isAuthenticated, "after authentication");
 
-    if (user && user.password === password) {
-      localStorage.setItem('user', JSON.stringify(user));
-      navigate('/perfil');
-    } else {
-      setError('Email o contraseña incorrectos');
+      // Check if the user is authenticated
+      if (isAuthenticated) {
+        navigate('/perfil');
+      } else {
+        setError('Email o contraseña incorrectos');
+      }
+    } catch (err) {
+      setError('Error al iniciar sesión');
+      console.error(err);
     }
+    // const user = users.find((user) => user.email === email);
+
+    // if (user && user.password === password) {
+    //   localStorage.setItem('user', JSON.stringify(user));
+    //   navigate('/perfil');
+    // } else {
+    //   setError('Email o contraseña incorrectos');
+    // }
   };
 
   return (
