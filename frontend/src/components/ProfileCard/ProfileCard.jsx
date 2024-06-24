@@ -8,6 +8,8 @@ import UploadWidget from "../UploadWidget";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 
 const generoOptions = [
   { value: "Hombre", label: "Hombre" },
@@ -74,7 +76,7 @@ function ProfileCard({ data, onSave }) {
   };
 
   return (
-    <Card sx={{ minWidth: 275, marginBottom: 20 }}>
+    <Card sx={{ minWidth: 275, marginBottom: 10, boxShadow: 3, bgcolor: '#f2f2f2', padding: '20px 30px 5px 30px' }}>
       <CardContent>
         <Typography
           variant="h3"
@@ -96,7 +98,7 @@ function ProfileCard({ data, onSave }) {
             alignItems: "center",
           }}
         >
-        {uploadedFoto ? (
+          {uploadedFoto ? (
             <img
               src={uploadedFoto}
               alt="Foto de perfil"
@@ -260,6 +262,7 @@ function ProfileCard({ data, onSave }) {
             >
               <strong>Número de Tarjeta:</strong> {cardnumber}
             </Typography>
+            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
             <Button
               variant="contained"
               onClick={handleEdit}
@@ -267,6 +270,19 @@ function ProfileCard({ data, onSave }) {
             >
               Editar
             </Button>
+            <Button
+              variant="contained"
+              onClick={handleEdit}
+              sx={{ marginTop: 2, bgcolor: "#04233A" }}
+            >
+              <Link
+                to="/cambiar-password"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                Cambiar Contraseña
+              </Link>
+            </Button>
+            </Box>
           </>
         )}
       </CardContent>
