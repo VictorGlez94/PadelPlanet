@@ -38,7 +38,8 @@ function BreadcrumbsComponent() {
         const isLast = index === pathnames.length - 1;
         const displayPath = path.replace(/-/g, " ");
 
-        const disableCategoria = path === 'categoria' && index < pathnames.length - 1;
+        const disableCategoria = path === "categoria" && index < pathnames.length - 1;
+        const disableProducto = path === "producto" && index < pathnames.length - 1;
 
         return (
           <Link
@@ -49,8 +50,8 @@ function BreadcrumbsComponent() {
             underline="none"
             aria-current={isLast ? "page" : undefined}
             sx={{
-              pointerEvents: disableCategoria ? "none" : "auto",
-              cursor: disableCategoria ? "default" : "pointer",
+              pointerEvents: disableCategoria || disableProducto ? "none" : "auto",
+              cursor: disableCategoria || disableProducto ? "default" : "pointer",
               fontWeight: isLast ? "bold" : "normal",
               bgcolor: isLast ? "rgba(204, 255, 0, 0.3)" : "transparent",
               padding: isLast ? "4px 8px" : "0px",

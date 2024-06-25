@@ -1,4 +1,3 @@
-// CartContext.js
 import { createContext, useState, useContext } from "react";
 import PropTypes from "prop-types";
 
@@ -11,7 +10,7 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [favorites, setFavorites] = useState([]);
-
+  const [productsForSale, setProductsForSale] = useState([]); 
 
   const addToCart = (product) => {
     const existingProductIndex = cart.findIndex((item) => item.id === product.id);
@@ -40,6 +39,14 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const addProductForSale = (product) => {
+    setProductsForSale([...productsForSale, product]);
+  };
+
+  const removeProductFromSale = (productId) => {
+    const updatedProductsForSale = productsForSale.filter((item) => item.id !== productId);
+    setProductsForSale(updatedProductsForSale);
+  };
 
   const clearCart = () => {
     setCart([]);
@@ -50,9 +57,12 @@ export const CartProvider = ({ children }) => {
   const value = {
     cart,
     favorites,
+    productsForSale,
     addToCart,
     removeFromCart,
     toggleFavorite,
+    addProductForSale,
+    removeProductFromSale,
     clearCart,
     cartItemCount,
   };
