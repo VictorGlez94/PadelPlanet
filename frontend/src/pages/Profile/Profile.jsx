@@ -2,25 +2,39 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import ProfileCard from '../../components/ProfileCard/ProfileCard';
 import { useState, useEffect } from 'react';
+import { api } from "../../services/config"
+// const { token } = useAuth();
+
 
 function Profile() {
   const [userData, setUserData] = useState(null);
-
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": localStorage.getItem('token'),
+  };
+  
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      setUserData({
-        usuario: user.username || '',
-        nombre: user.name || '',
-        fechaNacimiento: user.birthday || '',
-        telefono: user.phone || '',
-        direccion: user.address || '',
-        genero: user.gender || '',
-        email: user.email || '',
-        cardnumber: user.card_number || '',
-        foto: user.user_img || '',
-      });
-    }
+        api
+          .get("user/ownProfile", {
+            headers: headers,
+          })
+          .then((response) => {
+            setUserData({
+              usuario: response.data.result.username || "",
+              nombre: response.data.result.name || "",
+              fechaNacimiento: response.data.result.birthday || "",
+              telefono: response.data.result.phone || "",
+              direccion: response.data.result.address || "",
+              genero: response.data.result.gender || "",
+              email: response.data.result.email || "",
+              cardnumber: response.data.result.card_number || "",
+              foto: response.data.result.user_img || "",
+            });
+          })
+          .catch((error) => {
+            console.error("Error trying to get own profile data:", error);
+          });
+
   }, []);
 
   const handleSave = (updatedData) => {
