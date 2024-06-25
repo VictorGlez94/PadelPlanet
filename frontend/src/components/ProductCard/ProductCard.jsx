@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-// ProductCard.jsx
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -16,6 +16,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { formatDistanceToNowStrict } from "date-fns";
 import { es } from "date-fns/locale";
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
 
 const ProductCard = ({ product, category }) => {
   const timeAgo = formatDistanceToNowStrict(new Date(product.created_at), {
@@ -23,6 +24,8 @@ const ProductCard = ({ product, category }) => {
     locale: es,
   });
   const { addToCart, toggleFavorite, favorites } = useCart();
+  const { isAuthenticated, user } = useAuth(); 
+
   const [isFavorite, setIsFavorite] = useState(() =>
     favorites.some((item) => item.id === product.id)
   );
@@ -32,17 +35,27 @@ const ProductCard = ({ product, category }) => {
   }, [favorites, product.id]);
 
   const handleAddToCart = () => {
-    addToCart(product);
+    if (!isOwner) {
+      addToCart(product);
+    }
   };
 
   const handleToggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    toggleFavorite(product);
+    if (!isOwner) {
+      setIsFavorite(!isFavorite);
+      toggleFavorite(product);
+    }
+  };
+
+  const formatProductName = (name) => {
+    return name.toLowerCase().replace(/\s+/g, "-");
   };
 
   if (category && product.category !== category) {
     return null;
   }
+
+  const isOwner = isAuthenticated && product.seller_id === user.id;
 
   return (
     <Card
@@ -76,19 +89,22 @@ const ProductCard = ({ product, category }) => {
           {product.name}
         </Typography>
       </CardContent>
-      <CardMedia
-        component="img"
-        image={product.image_url}
-        alt={product.name}
-        sx={{
-          maxHeight: '250px',
-          width: "auto",
-          marginTop: "8px",
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      />
+      <Link to={`/producto/${formatProductName(product.name)}`} style={{ textDecoration: "none" }}>
+        <CardMedia
+          component="img"
+          image={product.image_url}
+          alt={product.name}
+          sx={{
+            maxHeight: '250px',
+            width: "auto",
+            marginTop: "8px",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            cursor: "pointer",
+          }}
+        />
+      </Link>
       <CardContent sx={{ textAlign: "center" }}>
         <Typography
           variant="body1"
@@ -107,6 +123,7 @@ const ProductCard = ({ product, category }) => {
           <IconButton
             aria-label="añadir a favoritos"
             onClick={handleToggleFavorite}
+            disabled={isOwner}
           >
             {isFavorite ? (
               <FavoriteIcon sx={{ color: "red", bgcolor: "transparent" }} />
@@ -116,7 +133,11 @@ const ProductCard = ({ product, category }) => {
               />
             )}
           </IconButton>
-          <IconButton aria-label="añadir al carrito" onClick={handleAddToCart}>
+          <IconButton
+            aria-label="añadir al carrito"
+            onClick={handleAddToCart}
+            disabled={isOwner}
+          >
             <ShoppingCartIcon sx={{ color: "#04233A" }} />
           </IconButton>
         </Box>

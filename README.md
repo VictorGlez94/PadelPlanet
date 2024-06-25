@@ -96,4 +96,14 @@ Post
 | POST   | /post          | SÍ    | admin  | Añade un nuevo post         | name, brand, category_id, description, price, product_status_id, image_url| {message: 'Product created'} |
 | POST   | /createPostWithProduct          | SÍ    | user  | Añade un nuevo post con producto         | seller_id, name, brand, category_id, description, price, product_status_id, image_url, sell_status| {message: 'Product created'} |
 | PUT    | /post/:id      | SÍ    | admin  | Actualiza el post |  seller_id, name, brand, category_id, description, price, product_status_id, image_url  | {message: 'post updated'}|
+**| PUT    | /post/:id      | SÍ    | admin  | Actualiza el post |  seller_id, name, brand, category_id, description, price, product_status_id, image_url  | {message: 'post updated'}|**
 | DELETE | /post/:id      | SÍ    | admin  | Elimina un post              |                                    | {message: 'Post deleted'}   |
+
+Payment
+
+
+| METHOD | ENDPOINT        | TOKEN | ROLE   | DESCRIPTION               | POST PARAMS                        | RETURNS                       |
+|--------|-----------------|-------|--------|---------------------------|------------------------------------|-------------------------------|
+| GET    | /          | SÍ    | user   | Lista de todos los like|                                       |                      |
+| GET    | /config      | SÍ    | user   | Obtener la clave publica de pago|                              | {publishableKey}                        |
+| POST    | /create-payment-intent    | SÍ    | user   | Crear el pago|                              |                       |
