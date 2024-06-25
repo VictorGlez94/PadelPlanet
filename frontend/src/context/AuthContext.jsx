@@ -6,21 +6,20 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [user, setUser] = useState({ id: 1, name: "John Doe" }); 
 
-  // Función para iniciar sesión 
   const login = () => {
     setIsAuthenticated(true);
-    
+    setUser({ id: 1, name: "John Doe" }); 
   };
 
-  // Función para cerrar sesión
   const logout = () => {
     setIsAuthenticated(false);
-    
+    setUser(null); 
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

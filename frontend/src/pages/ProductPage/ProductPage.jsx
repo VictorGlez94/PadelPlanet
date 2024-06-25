@@ -8,6 +8,7 @@ import {
   List,
   Button,
   IconButton,
+  TextField,
 } from "@mui/material";
 import productsData from "../../assets/db/products.json";
 import BreadcrumbsComponent from "../../components/Breadcrumbs";
@@ -19,12 +20,15 @@ import SmsIcon from "@mui/icons-material/Sms";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { CheckBox } from "@mui/icons-material";
+import { CheckBox }  from "@mui/icons-material";
+import EditIcon from '@mui/icons-material/Edit';
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
 
 const ProductPage = () => {
   const { productName } = useParams();
   const { addToCart, toggleFavorite, favorites } = useCart();
+  const { isAuthenticated, user } = useAuth();
 
   const formatProductName = (name) => {
     return name.toLowerCase().replace(/\s+/g, "-");
@@ -33,6 +37,9 @@ const ProductPage = () => {
   const product = productsData.find(
     (p) => formatProductName(p.name) === productName
   );
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedProduct, setEditedProduct] = useState({ ...product });
 
   if (!product) {
     return (
@@ -100,7 +107,24 @@ const ProductPage = () => {
     window.open(url, "_blank");
   };
 
-  return (
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    setIsEditing(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedProduct((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+
+    return (
     <>
       <BreadcrumbsComponent />
       <Box
@@ -210,6 +234,7 @@ const ProductPage = () => {
                 <ShoppingCartOutlinedIcon sx={{ color: "#04233A" }} />
               </IconButton>
             </Box>
+            
           </CardContent>
         </Box>
         <Box
@@ -327,6 +352,96 @@ const ProductPage = () => {
               </Typography>
             </Box>
           </CardContent>
+          {isAuthenticated && user.id === product.seller_id && (
+              <Button
+                variant="contained"
+                sx={{
+                  display: 'flex',
+                  margin: '20px',
+                  alignItems: 'center',
+                  bgcolor: "#04233A",
+                  color: "white",
+                  gap: '8px',
+                  fontWeight: "bold",
+                  "&:hover": {
+                    backgroundColor: "#1565C0",
+                  },
+                }}
+                onClick={handleEditClick}
+              >
+              <EditIcon/>  Editar
+              </Button>
+            )}
+            {isEditing && (
+              <Box component="form">
+                <TextField
+                  name="name"
+                  label="Nombre del producto"
+                  value={editedProduct.name}
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  name="price"
+                  label="Precio"
+                  type="number"
+                  value={editedProduct.price}
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
+                                <TextField
+                  name="brand"
+                  label="Marca"
+                  value={editedProduct.brand}
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
+                                <TextField
+                  name="category"
+                  label="Categoría"
+                  value={editedProduct.category}
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
+                                <TextField
+                  name="product_status"
+                  label="Estado del producto"
+                  value={editedProduct.product_status_id}
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  name="description"
+                  label="Descripción"
+                  value={editedProduct.description}
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                  multiline
+                  rows={10}
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    bgcolor: "#CCFF00",
+                    color: "#04233A",
+                    fontWeight: "bold",
+                    "&:hover": {
+                      backgroundColor: "#e9ff60",
+                    },
+                  }}
+                  onClick={handleSaveClick}
+                >
+                  Guardar
+                </Button>
+              </Box>
+            )}
         </Box>
       </Box>
     </>
