@@ -123,6 +123,7 @@ const ProductPage = () => {
     }));
   };
 
+  const isOwner = isAuthenticated && user.id === product.seller_id;
 
     return (
     <>
@@ -220,7 +221,7 @@ const ProductPage = () => {
                 borderRadius: "15px",
               }}
             >
-              <IconButton aria-label="favorito" onClick={handleToggleFavorite}>
+              <IconButton aria-label="favorito" onClick={handleToggleFavorite} disabled={isOwner}>
                 {isFavorite ? (
                   <FavoriteIcon sx={{ color: "red" }} />
                 ) : (
@@ -230,6 +231,7 @@ const ProductPage = () => {
               <IconButton
                 aria-label="añadir al carrito"
                 onClick={handleAddToCart}
+                disabled={isOwner}
               >
                 <ShoppingCartOutlinedIcon sx={{ color: "#04233A" }} />
               </IconButton>
