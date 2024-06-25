@@ -9,7 +9,8 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, responsiveFontSizes } from "@mui/material";
+import { api } from "../../services/config";
 
 const generoOptions = [
   { value: "Hombre", label: "Hombre" },
@@ -38,10 +39,15 @@ function ProfileCard({ data, onSave }) {
     email: email || "",
     cardnumber: cardnumber || "",
   });
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: localStorage.getItem("token"),
+  };
 
   const handleUploadComplete = (url) => {
     setUploadedFoto(url);
     setEditedData({ ...editedData, foto: url });
+    console.log(2, uploadedFoto);
   };
 
   const handleEdit = () => {
@@ -51,6 +57,7 @@ function ProfileCard({ data, onSave }) {
   const handleCancelEdit = () => {
     setEditMode(false);
     setEditedData({
+      usuario: usuario,
       nombre: nombre,
       direccion: direccion,
       telefono: telefono,
@@ -61,9 +68,34 @@ function ProfileCard({ data, onSave }) {
   };
 
   const handleSave = () => {
-    console.log("Datos actualizados:", editedData);
-    onSave({ ...editedData, foto: uploadedFoto });
-    setEditMode(false);
+    console.log(`Datos actualizado: ${JSON.stringify(editedData)}`);
+
+    api
+      .put(
+        "user/ownProfile/update",
+        {
+          username: editedData.usuario,
+          name: editedData.nombre,
+          phone: editedData.telefono,
+          address: editedData.direccion,
+          birthday: editedData.fechaNacimiento,
+          gender: editedData.genero,
+          email: editedData.email,
+          card_number: editedData.cardnumber,
+          image_url: uploadedFoto,
+        },
+        { headers: headers }
+      )
+      .then((response) => {
+        onSave({ ...editedData, foto: uploadedFoto });
+        console.log(editedData);
+        setEditMode(false);
+      })
+      .catch((error) => {
+        console.error("Error updating profile:", error);
+        window.alert("El usuario no fue actualizado.");
+        setEditMode(false);
+      });
   };
 
   const handleChange = (event) => {
@@ -76,7 +108,15 @@ function ProfileCard({ data, onSave }) {
   };
 
   return (
-    <Card sx={{ minWidth: 275, marginBottom: 10, boxShadow: 3, bgcolor: '#f2f2f2', padding: '20px 30px 5px 30px' }}>
+    <Card
+      sx={{
+        minWidth: 275,
+        marginBottom: 10,
+        boxShadow: 3,
+        bgcolor: "#f2f2f2",
+        padding: "20px 30px 5px 30px",
+      }}
+    >
       <CardContent>
         <Typography
           variant="h3"
@@ -121,6 +161,16 @@ function ProfileCard({ data, onSave }) {
         {editMode ? (
           <>
             <TextField
+              name="user"
+              label="Usuario"
+              value={editedData.usuario}
+              onChange={handleChange}
+              fullWidth
+              sx={{ marginBottom: 2 }}
+              InputLabelProps={{ style: { fontSize: 16 } }}
+              inputProps={{ style: { fontSize: 16 } }}
+            />
+            <TextField
               name="nombre"
               label="Nombre"
               value={editedData.nombre}
@@ -148,6 +198,17 @@ function ProfileCard({ data, onSave }) {
               fullWidth
               sx={{ marginBottom: 2 }}
               InputLabelProps={{ style: { fontSize: 16 } }}
+              inputProps={{ style: { fontSize: 16 } }}
+            />
+            <TextField
+              name="fechaNacimiento"
+              label="Fecha de nacimiento"
+              value={editedData.fechaNacimiento}
+              type="date"
+              onChange={handleChange}
+              fullWidth
+              sx={{ marginBottom: 2 }}
+              InputLabelProps={{ shrink: true, style: { fontSize: 16 } }}
               inputProps={{ style: { fontSize: 16 } }}
             />
             <TextField
@@ -262,26 +323,26 @@ function ProfileCard({ data, onSave }) {
             >
               <strong>Número de Tarjeta:</strong> {cardnumber}
             </Typography>
-            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-            <Button
-              variant="contained"
-              onClick={handleEdit}
-              sx={{ marginTop: 2, bgcolor: "#04233A" }}
-            >
-              Editar
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleEdit}
-              sx={{ marginTop: 2, bgcolor: "#04233A" }}
-            >
-              <Link
-                to="/cambiar-password"
-                style={{ textDecoration: "none", color: "inherit" }}
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                variant="contained"
+                onClick={handleEdit}
+                sx={{ marginTop: 2, bgcolor: "#04233A" }}
               >
-                Cambiar Contraseña
-              </Link>
-            </Button>
+                Editar
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleEdit}
+                sx={{ marginTop: 2, bgcolor: "#04233A" }}
+              >
+                <Link
+                  to="/cambiar-password"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Cambiar Contraseña
+                </Link>
+              </Button>
             </Box>
           </>
         )}
@@ -292,9 +353,9 @@ function ProfileCard({ data, onSave }) {
 
 ProfileCard.propTypes = {
   data: PropTypes.shape({
-    usuario: PropTypes.string.isRequired,
+    usuario: PropTypes.string,
     nombre: PropTypes.string.isRequired,
-    fechaNacimiento: PropTypes.string.isRequired,
+    fechaNacimiento: PropTypes.string,
     telefono: PropTypes.string.isRequired,
     direccion: PropTypes.string.isRequired,
     genero: PropTypes.string.isRequired,

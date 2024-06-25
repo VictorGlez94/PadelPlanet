@@ -106,6 +106,7 @@ const getOwnProfile = async (req, res) => {
 
 async function updateOwnProfile(req, res) {
   try {
+    console.log(req.body)
     if (req.body.password !== undefined) {
       return res
         .status(404)

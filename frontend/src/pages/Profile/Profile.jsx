@@ -12,7 +12,7 @@ function Profile() {
     "Content-Type": "application/json",
     "Authorization": localStorage.getItem('token'),
   };
-  // let responseRequest;
+  
   useEffect(() => {
         api
           .get("user/ownProfile", {
@@ -28,11 +28,11 @@ function Profile() {
               genero: response.data.result.gender || "",
               email: response.data.result.email || "",
               cardnumber: response.data.result.card_number || "",
-              foto: response.data.result.user_immg || "",
+              foto: response.data.result.user_img || "",
             });
           })
           .catch((error) => {
-            console.error("Error fetching Stripe config:", error);
+            console.error("Error trying to get own profile data:", error);
           });
 
   }, []);
