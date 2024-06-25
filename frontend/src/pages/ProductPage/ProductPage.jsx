@@ -19,6 +19,7 @@ import SmsIcon from "@mui/icons-material/Sms";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { CheckBox } from "@mui/icons-material";
 import { useCart } from "../../context/CartContext";
 
 const ProductPage = () => {
@@ -41,18 +42,25 @@ const ProductPage = () => {
     );
   }
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
   const [isFavorite, setIsFavorite] = useState(() =>
     favorites.some((item) => item.id === product.id)
   );
 
   const handleToggleFavorite = () => {
-    setIsFavorite(!isFavorite); 
-    toggleFavorite(product); 
+    setIsFavorite(!isFavorite);
+    toggleFavorite(product);
   };
 
-
   const handleAddToCart = () => {
-    addToCart(product); 
+    addToCart(product);
   };
 
   const handleShare = (network) => {
@@ -120,12 +128,12 @@ const ProductPage = () => {
             alt={product.name}
             sx={{ maxHeight: "400px", maxWidth: "400px" }}
           />
-          <CardContent>
-            <Typography variant="h4" color="text.secondary">
+          <CardContent sx={{ width: "400px" }}>
+            <Typography variant="h4" color="#04233A">
               <strong>Vendido por:</strong> {product.seller_id}
             </Typography>
-            <Typography variant="body1" color="text.secondary">
-              <strong>Fecha de Publicación:</strong> {product.created_at}
+            <Typography variant="body1" color="#04233A">
+              <strong>Fecha de Publicación:</strong> {formatDate(product.created_at)}
             </Typography>
             <Box
               sx={{
@@ -167,7 +175,7 @@ const ProductPage = () => {
                 Mensaje
               </Button>
             </Box>
-            <Typography variant="body1" color="text.secondary" marginBottom='8px'>
+            <Typography variant="body1" color="#04233A" marginBottom="8px">
               <strong>Comparte este anuncio:</strong>
             </Typography>
             <Box>
@@ -214,37 +222,110 @@ const ProductPage = () => {
           <Typography
             variant="h3"
             sx={{
-              backgroundColor: "rgba(204, 255, 0, 0.2)",
-              padding: '4px',
-              width: "70vw",
-              marginBottom: "10px",
-              textAlign: 'center'
+              backgroundColor: "rgba(204, 255, 0, 0.15)",
+              padding: "4px",
+              width: "72vw",
+              marginBottom: "15px",
+              textAlign: "center",
+              color: "#04233A",
             }}
           >
             {product.name}
           </Typography>
-          <Typography variant="h4"             sx={{
-              border: '1px solid green',
-              padding: '12px',
-              marginBottom: "10px",
-              textAlign: 'center',
-              borderRadius: '15px'
-            }}>
-          <strong>{product.price.toFixed(2)}€</strong>
-            </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              padding: "5px 30px",
+              textAlign: "center",
+              borderRadius: "30px",
+              bgcolor: "rgba(4, 35, 58, 0.2)",
+              color: "#04233A",
+            }}
+          >
+            <strong>{product.price.toFixed(2)} €</strong>
+          </Typography>
           <CardContent>
-            <Typography variant="h4">
-              <strong>Marca:</strong> {product.brand}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              <strong>Categoría:</strong> {product.category}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              <strong>Estado del producto:</strong> {product.product_status_id}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {product.description}
-            </Typography>
+            <Box
+              sx={{
+                padding: "10px 30px",
+                marginBottom: "30px",
+                color: "#04233A",
+                textAlign: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "8px",
+                  alignItems: "center",
+                }}
+              >
+                <CheckBox />
+                <Typography variant="h6">
+                  <strong>Marca:</strong> {product.brand}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "8px",
+                  alignItems: "center",
+                }}
+              >
+                <CheckBox />
+                <Typography variant="h6">
+                  <strong>Categoría:</strong> {product.category}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "8px",
+                  alignItems: "center",
+                }}
+              >
+                <CheckBox />
+                <Typography variant="h6">
+                  <strong>Estado del producto:</strong>{" "}
+                  {product.product_status_id}
+                </Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                border: "1px dotted #04233A",
+                padding: "45px 30px",
+                textAlign: "center",
+                color: "#04233A",
+                width: "70vw",
+                position: "relative",
+              }}
+            >
+              <Typography
+                variant="body1"
+                sx={{
+                  position: "absolute",
+                  top: "-10px",
+                  left: "25px",
+                  background: "rgba(204, 255, 0, 1)",
+                  padding: "0 20px",
+                  color: "#04233A",
+                }}
+              >
+                <strong>Descripción</strong>
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#04233A",
+                }}
+              >
+                {product.description}
+              </Typography>
+            </Box>
           </CardContent>
         </Box>
       </Box>
