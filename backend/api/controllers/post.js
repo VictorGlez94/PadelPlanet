@@ -79,6 +79,7 @@ async function deletePost(req, res) {
 async function createPostWithProduct(req, res) {
   try {
     const user = res.locals.user;
+    console.log(req.body)
 
     // Verificar que user y las propiedades de req.body existan
     if (
@@ -88,7 +89,9 @@ async function createPostWithProduct(req, res) {
       !req.body.category_id ||
       !req.body.price ||
       !req.body.product_status_id ||
-      !req.body.image_url
+      !req.body.description
+      // ||
+      // !req.body.image_url
     ) {
       return res.status(400).send("Missing required fields");
     }
@@ -101,8 +104,8 @@ async function createPostWithProduct(req, res) {
       category_id: req.body.category_id,
       description: req.body.description,
       price: req.body.price,
-      product_status_id: req.body.product_status_id,
-      image_url: req.body.image_url,
+      product_status_id: req.body.product_status_id
+      // image_url: req.body.image_url,
     });
     
     const newPost = await newProduct.createPost({
