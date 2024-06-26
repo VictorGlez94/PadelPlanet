@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -6,6 +6,8 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { FormControl, InputLabel, InputAdornment } from "@mui/material";
 import UploadWidget from "../../components/UploadWidget";
+import { api } from "../../services/config";
+import { Navigate } from "react-router-dom";
 
 const Form = styled("form")(() => ({
   display: "flex",
@@ -21,24 +23,77 @@ const TextFieldStyled = styled(TextField)(() => ({
 
 const NewProduct = () => {
   const [categoria, setCategoria] = useState("");
-  const [estado, setEstado] = useState("");
+  const [status, setStatus] = useState("");
 
-  const [nombre, setNombre] = useState("");
-  const [marca, setMarca] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [precio, setPrecio] = useState("");
+  const [name, setName] = useState("");
+  const [brand, setBrand] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+
+  const [categories, setCategories] = useState([]);
+  const [statuses, setStatuses] = useState([]);
+
+  const [sellerId, setSellerId] = useState("");
+
+  useEffect(() => {
+    const fetchCategoriesAndStatuses = async () => {
+      try {
+        const [categoriesResponse, statusesResponse] = await Promise.all([
+          api.get("productcategory/"),
+          api.get("productstatus/"),
+        ]);
+        setCategories(categoriesResponse.data);
+        setStatuses(statusesResponse.data);
+      } catch (error) {
+        console.error("Error fetching categories and statuses:", error);
+      }
+    };
+
+    fetchCategoriesAndStatuses();
+    
+    const userId = localStorage.getItem("userId"); 
+    
+    setSellerId(userId);
+  }, []);
 
   const handleCategoriaChange = (event) => {
     setCategoria(event.target.value);
   };
 
   const handleEstadoChange = (event) => {
-    setEstado(event.target.value);
+    setStatus(event.target.value);
   };
 
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const categoryId = categories.find((cat) => cat.name === categoria)?.id;
+      const statusId = statuses.find((stat) => stat.name === status)?.id;
+
+      const formData = {
+        name,
+        brand,
+        description,
+        price,
+        category_id: categoryId,
+        status_id: statusId,
+        seller_id: sellerId,
+      };
+
+      const response = await api.post("product/", formData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      console.log("Producto creado:", response.data);
+      alert('Producto creado correctamente');
+      Navigate('/');
+    } catch (error) {
+      console.error("Error al crear el producto", error);
+      alert('Error al crear el producto');
+    }
   };
 
   return (
@@ -50,21 +105,21 @@ const NewProduct = () => {
         onSubmit={handleSubmit}
         sx={{ marginTop: "50px", marginBottom: "50px" }}
       >
-        <UploadWidget/>
+        <UploadWidget />
         <TextFieldStyled
-          name="nombre"
+          name="name"
           label="Nombre"
           variant="outlined"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
         />
         <TextFieldStyled
-          name="marca"
+          name="brand"
           label="Marca"
           variant="outlined"
-          value={marca}
-          onChange={(e) => setMarca(e.target.value)}
+          value={brand}
+          onChange={(e) => setBrand(e.target.value)}
           required
         />
         <FormControl variant="outlined" fullWidth>
@@ -77,45 +132,46 @@ const NewProduct = () => {
             label="Categoría"
             required
           >
-            <MenuItem value="palas">Palas</MenuItem>
-            <MenuItem value="zapatillas">Zapatillas</MenuItem>
-            <MenuItem value="camisetas">Camisetas</MenuItem>
-            <MenuItem value="pantalones">Pantalones</MenuItem>
-            <MenuItem value="mochilas">Mochilas</MenuItem>
-            <MenuItem value="accesorios">Accesorios</MenuItem>
+            {categories.map((category) => (
+              <MenuItem key={category.id} value={category.name}>
+                {category.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <FormControl variant="outlined" fullWidth>
           <InputLabel id="estado-label">Estado del producto</InputLabel>
           <Select
-            labelId="estado-label"
-            id="estado"
-            value={estado}
+            labelId="status-label"
+            id="status"
+            value={status}
             onChange={handleEstadoChange}
             label="Estado del producto"
             required
           >
-            <MenuItem value="Nuevo">Nuevo</MenuItem>
-            <MenuItem value="Poco usado">Poco usado</MenuItem>
-            <MenuItem value="Muy usado">Muy usado</MenuItem>
+            {statuses.map((status) => (
+              <MenuItem key={status.id} value={status.name}>
+                {status.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <TextFieldStyled
-          name="descripcion"
+          name="description"
           label="Descripción del producto"
           multiline
           rows={4}
           variant="outlined"
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           required
         />
         <TextFieldStyled
-          name="precio"
+          name="price"
           label="Precio"
           variant="outlined"
-          value={precio}
-          onChange={(e) => setPrecio(e.target.value)}
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
           InputProps={{
             endAdornment: <InputAdornment position="end">€</InputAdornment>,
           }}
