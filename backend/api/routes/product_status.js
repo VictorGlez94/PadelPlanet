@@ -9,7 +9,7 @@ const {
 } = require("../controllers/product_status");
 const { debugging, checkAuth, checkAdmin } = require("../middlewares");
 
-router.get("/", debugging, checkAuth, checkAdmin, getAllProductStatuses);
+router.get("/", debugging, checkAuth, getAllProductStatuses);
 router.get("/:id", debugging, checkAuth, checkAdmin, getOneProductStatus);
 router.post("/", debugging, checkAuth, checkAdmin, createProductStatus);
 router.put("/:id", debugging, checkAuth, checkAdmin, updateProductStatus);

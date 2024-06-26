@@ -35,12 +35,17 @@ const NewProduct = () => {
 
   const [sellerId, setSellerId] = useState("");
 
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+    };
+
   useEffect(() => {
     const fetchCategoriesAndStatuses = async () => {
       try {
         const [categoriesResponse, statusesResponse] = await Promise.all([
-          api.get("productcategory/"),
-          api.get("productstatus/"),
+          await api.get("productcategory/", { headers: headers }),
+          await api.get("productstatus/", { headers: headers }),
         ]);
         setCategories(categoriesResponse.data);
         setStatuses(statusesResponse.data);
@@ -48,13 +53,14 @@ const NewProduct = () => {
         console.error("Error fetching categories and statuses:", error);
       }
     };
-
     fetchCategoriesAndStatuses();
     
     const userId = localStorage.getItem("userId"); 
     
     setSellerId(userId);
   }, []);
+  
+  console.log(1 , categories, statuses)
 
   const handleCategoriaChange = (event) => {
     setCategoria(event.target.value);
@@ -67,20 +73,21 @@ const NewProduct = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      
       const categoryId = categories.find((cat) => cat.name === categoria)?.id;
-      const statusId = statuses.find((stat) => stat.name === status)?.id;
+      const statusId = statuses.find((stat) => stat.status === status)?.id;
 
+      console.log(2, statuses, statusId, status)
       const formData = {
         name,
         brand,
         description,
         price,
         category_id: categoryId,
-        status_id: statusId,
-        seller_id: sellerId,
+        product_status_id: statusId
       };
 
-      const response = await api.post("product/", formData, {
+      const response = await api.post("post/createPostWithProduct", formData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: localStorage.getItem("token"),
@@ -132,11 +139,12 @@ const NewProduct = () => {
             label="Categoría"
             required
           >
-            {categories.map((category) => (
-              <MenuItem key={category.id} value={category.name}>
-                {category.name}
-              </MenuItem>
-            ))}
+            <MenuItem value="Palas">Palas</MenuItem>
+            <MenuItem value="Zapatillas">Zapatillas</MenuItem>
+            <MenuItem value="Camisetas">Camisetas</MenuItem>
+            <MenuItem value="Pantalones">Pantalones</MenuItem>
+            <MenuItem value="Mochilas">Mochilas</MenuItem>
+            <MenuItem value="Accesorios">Accesorios</MenuItem>
           </Select>
         </FormControl>
         <FormControl variant="outlined" fullWidth>
@@ -149,11 +157,9 @@ const NewProduct = () => {
             label="Estado del producto"
             required
           >
-            {statuses.map((status) => (
-              <MenuItem key={status.id} value={status.name}>
-                {status.name}
-              </MenuItem>
-            ))}
+            <MenuItem value="Nuevo">Nuevo</MenuItem>
+            <MenuItem value="Poco usado">Poco usado</MenuItem>
+            <MenuItem value="Muy usado">Muy usado</MenuItem>
           </Select>
         </FormControl>
         <TextFieldStyled
