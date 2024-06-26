@@ -6,48 +6,44 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState("");
+  const [user, setUser] = useState(null);
 
-  // Función para iniciar sesión 
+  // Function to log in
   const login = (email, password) => {
     setIsAuthenticated(false);
-    console.log(email, password)
+    console.log(email, password);
     api
       .post("auth/login", {
         password: password,
         email: email,
       })
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         if (response.data.result.token) {
-          console.log("dentro")
+          console.log("Logged in successfully");
           setToken(response.data.result.token);
           setIsAuthenticated(true);
           localStorage.setItem("token", response.data.result.token);
+          setUser({ id: response.data.result.id, name: response.data.result.name });
         }
       })
       .catch((error) => {
         console.error("User is not authenticated", error);
       });
-
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [user, setUser] = useState({ id: 1, name: "John Doe" }); 
-
-  const login = () => {
-    setIsAuthenticated(true);
-    setUser({ id: 1, name: "John Doe" }); 
-
   };
 
+  // Function to log out
   const logout = () => {
     setIsAuthenticated(false);
-    setUser(null); 
+    setToken("");
+    setUser(null);
+    localStorage.removeItem("token");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, token, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
