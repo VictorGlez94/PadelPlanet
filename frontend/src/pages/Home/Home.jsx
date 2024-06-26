@@ -24,7 +24,6 @@ function Home() {
           await api.get("product/",{headers: headers}),
           await api.get("user/",{headers: headers}),
         ]);
-        console.log(1, productsResponse, usersResponse, productsResponse.data)
         setProducts(productsResponse.data);
         setUsers(usersResponse.data);
         setLoading(false);
@@ -37,8 +36,7 @@ function Home() {
     
     fetchData();
   }, []);
-  
-  console.log(2, users, products)
+
   const joinData = () => {
     return products.map((product) => {
       const user = users.find((user) => user.id === product.seller_id);
