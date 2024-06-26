@@ -13,7 +13,7 @@ const login = async (req, res) => {
       });
 
       if (!user) {
-        res.json({
+        return res.json({
           message: "Email or password incorrect",
         });
       }
@@ -41,9 +41,11 @@ const login = async (req, res) => {
 }
 
 const signup = async (req, res) => {
+  console.log("aqui")
   try {
-    const hash = bcrypt.genSaltSync(BCRYPT_ROUNDS);
+    const hash = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(req.body.password, hash);
+    console.log(hash, hashedPassword)
     const user = await User.create({
       email: req.body.email,
       username: req.body.username,
@@ -56,19 +58,21 @@ const signup = async (req, res) => {
       address: req.body.address,
       role_id: req.body.role_id || 2, // Default role_id to 2 if not provided
     });
+    console.log(user)
 
     const payload = {
       email: user.email,
     };
     const token = jwt.sign(payload, process.env.JWT_WEBTOKENSECRET);
-    res.json({
+    console.log(token)
+    return res.json({
       message: "Signup succesful",
       result: {
         token,
       },
     });
   } catch (error) {
-    res.json(error);
+    return res.json(error.message);
   }
 };
 

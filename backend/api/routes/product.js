@@ -13,7 +13,7 @@ const {
   checkAuth, 
   checkAdmin } = require("../middlewares");
 
-router.get("/", debugging, checkAuth, checkAdmin, getAllProducts);
+router.get("/", debugging, getAllProducts);
 router.get("/:id", debugging, checkAuth, checkAdmin, getOneProduct);
 router.post("/", debugging, checkAuth, checkAdmin, createProduct);
 router.put("/:id", debugging, checkAuth, checkAdmin, updateProduct);
