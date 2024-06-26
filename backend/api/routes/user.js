@@ -18,7 +18,7 @@ const {
   debugging
 } = require('../middlewares/index')
 
-router.get("/", debugging, checkAuth, checkAdmin, getAllUsers);
+router.get("/", debugging, getAllUsers);
 router.get("/ownProfile", debugging, checkAuth, getOwnProfile);
 router.get("/:id", debugging, checkAuth, checkAdmin, getOneUser);
 router.post("/",debugging, checkAdmin, createUser);

@@ -5,7 +5,9 @@ const {
   signup
 } = require("../controllers/auth.controller");
 
-router.post('/login', login)
-router.post('/signup', signup)
+const { debugging } = require("../middlewares/index");
+
+router.post('/login',debugging, login)
+router.post('/signup',debugging, signup)
 
 module.exports = router;

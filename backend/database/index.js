@@ -13,8 +13,10 @@ const sequelize = new Sequelize(
   }
 );
 
+// const sequelize = new Sequelize(process.env.DB_URL, {logging: false});
+
 async function checkConnection() {
-  sequelize
+  await sequelize
     .authenticate()
     .then(() => {
       console.log(

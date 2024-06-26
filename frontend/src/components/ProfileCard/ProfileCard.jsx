@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -10,7 +9,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
-import { Box, responsiveFontSizes } from "@mui/material";
+import { Box } from "@mui/material";
 import { api } from "../../services/config";
 
 const generoOptions = [
@@ -87,6 +86,7 @@ function ProfileCard({ data, onSave }) {
         },
         { headers: headers }
       )
+      // eslint-disable-next-line no-unused-vars
       .then((response) => {
         onSave({ ...editedData, foto: uploadedFoto });
         console.log(editedData);

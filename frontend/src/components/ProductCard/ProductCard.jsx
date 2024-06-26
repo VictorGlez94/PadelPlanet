@@ -158,7 +158,7 @@ const ProductCard = ({ product, category }) => {
         }
         subheader={
           <Typography variant="body2" noWrap>
-            {`por ${product.seller_id}`}
+            {`por ${product.sellerName}`}
           </Typography>
         }
       />

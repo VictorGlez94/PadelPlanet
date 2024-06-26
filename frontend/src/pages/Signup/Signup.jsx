@@ -18,7 +18,7 @@ export default function SignUp() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -57,11 +57,12 @@ export default function SignUp() {
       return;
     }
 
-    api
-      .post("/auth/signup", userData)
-      .then((response) => {
-        console.log("User registered:", response.data);
-        login(userData.email, userData.password);
+    console.log(userData)
+    await api
+      .post("auth/signup", userData)
+      .then(async (response) => {
+        console.log("User registered:", response);
+        await login(userData.email, userData.password);
         navigate("/"); 
       })
       .catch((error) => {
