@@ -9,7 +9,7 @@ const {
 } = require("../controllers/product_category");
 const { checkAdmin, checkAuth, debugging } = require("../middlewares");
 
-router.get("/", debugging, checkAuth, checkAdmin, getAllProductCategories);
+router.get("/", debugging, getAllProductCategories);
 router.get("/:id", debugging, checkAuth, checkAdmin, getOneProductCategory);
 router.post("/", debugging, checkAuth, checkAdmin, createProductCategory);
 router.put("/:id", debugging, checkAuth, checkAdmin, updateProductCategory);

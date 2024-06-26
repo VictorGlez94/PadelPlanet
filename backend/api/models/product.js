@@ -52,12 +52,12 @@ const Product = sequelize.define(
 
 //   for (let i = 0; i < 10; i++) {
 //     const product = {
-//       seller_id: random.int(1,5),
+//       seller_id: random.int(2, 5),
 //       name: `Product ${i}`,
 //       brand: `Brand ${i}`,
 //       category_id: random.int(1, 5),
 //       description: `This is a product description for product ${i}`,
-//       price: random.float(10.0, 100.0),
+//       price: parseFloat(random.float(10.0, 100.0).toFixed(2)),
 //       product_status_id: random.int(1, 3),
 //       image_url: `https://example.com/image${i}`,
 //     };
