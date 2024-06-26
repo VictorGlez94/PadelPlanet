@@ -12,8 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
-// import users from '/home/victor/code/final-project/PadelPlanet/frontend/src/assets/db/users.json';  // Asumiendo que el archivo JSON está en el mismo directorio
-// import users from '../../../src/assets/db/users.json';  // Asumiendo que el archivo JSON está en el mismo directorio
 import { useAuth } from '../../context/AuthContext';
 
 
@@ -32,7 +30,6 @@ export default function Login() {
       await login(email, password);
       console.log(isAuthenticated, "after authentication");
 
-      // Check if the user is authenticated
       if (isAuthenticated) {
         navigate('/perfil');
       } else {
@@ -42,14 +39,6 @@ export default function Login() {
       setError('Error al iniciar sesión');
       console.error(err);
     }
-    // const user = users.find((user) => user.email === email);
-
-    // if (user && user.password === password) {
-    //   localStorage.setItem('user', JSON.stringify(user));
-    //   navigate('/perfil');
-    // } else {
-    //   setError('Email o contraseña incorrectos');
-    // }
   };
 
   return (

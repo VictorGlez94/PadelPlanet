@@ -1,5 +1,6 @@
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -10,15 +11,62 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useAuth } from "../../context/AuthContext";
+import { api } from "../../services/config";
 
 export default function SignUp() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+
+    const userData = {
+      name: data.get("name"),
+      username: data.get("userName"),
+      birthday: data.get("dateOfBirth"),
+      gender: data.get("gender"),
+      phone: data.get("phone"),
+      address: data.get("address"),
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
+    const confirmPassword = data.get("confirmPassword");
+    const acceptPolicies = data.get("acceptPolicies");
+
+    for (let key in userData) {
+      if (!userData[key]) {
+        alert("Por favor completa todos los campos");
+        return;
+      }
+    }
+
+    if (!confirmPassword) {
+      alert("Por favor confirma tu contraseña");
+      return;
+    }
+
+    if (userData.password !== confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+
+    if (!acceptPolicies) {
+      alert("Por favor acepta la Política de Privacidad y la Política de Cookies");
+      return;
+    }
+
+    api
+      .post("/auth/signup", userData)
+      .then((response) => {
+        console.log("User registered:", response.data);
+        login(userData.email, userData.password);
+        navigate("/"); 
+      })
+      .catch((error) => {
+        console.error("Error during registration:", error);
+      });
   };
 
   return (
@@ -95,7 +143,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-              required
+                required
                 fullWidth
                 id="phone"
                 label="Teléfono"
@@ -108,7 +156,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-              required
+                required
                 fullWidth
                 id="address"
                 label="Dirección"
@@ -154,7 +202,10 @@ export default function SignUp() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    value="allowExtraEmails"
+                    name="acceptPolicies"
+                    value="acceptPolicies"
+                    color="primary"
+                    required
                     sx={{ color: "#04233A" }}
                   />
                 }
