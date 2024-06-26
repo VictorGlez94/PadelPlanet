@@ -8,24 +8,42 @@ import './Home.css';
 
 function Home() {
   const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    api.get('/product')
-      .then(response => {
-        setProducts(response.data);
+    const fetchData = async () => {
+      try {
+        const [productsResponse, usersResponse] = await Promise.all([
+          api.get('/product'),
+          api.get('/user')
+        ]);
+        setProducts(productsResponse.data);
+        setUsers(usersResponse.data);
         setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error cargando productos:', error);
-        setError('Ha habido un error cargando productos');
+      } catch (error) {
+        console.error('Ha habido un error buscando los productos', error);
+        setError('Ha habido un error buscando los productos');
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const filteredProducts = products.filter(product =>
+  const joinData = () => {
+    return products.map(product => {
+      const user = users.find(user => user.id === product.seller_id);
+      return {
+        ...product,
+        sellerName: user ? user.name : 'Unknown'
+      };
+    });
+  };
+
+  const filteredProducts = joinData().filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -61,7 +79,7 @@ function Home() {
         ¿Qué quieres encontrar?
       </Typography>
       <SearchBar onSearchChange={setSearchTerm} />
-      <CategoryList />
+      <CategoryList /> 
       <Typography variant='h4' color='black' textAlign="center" marginTop={'30px'} marginBottom={'30px'}>
         Productos a la venta
       </Typography>
