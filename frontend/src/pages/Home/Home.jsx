@@ -42,7 +42,7 @@ function Home() {
       const user = users.find((user) => user.id === product.seller_id);
       return {
         ...product,
-        sellerName: user ? user.name : "Desconocido",
+        sellerName: user ? user.username : "Desconocido",
       };
     });
   };

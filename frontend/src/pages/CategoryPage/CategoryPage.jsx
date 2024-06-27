@@ -56,7 +56,7 @@ const CategoryPage = () => {
       return {
         ...product,
         categoryName: category ? category.name : "Desconocido",
-        sellerName: user ? user.name : "Desconocido",
+        sellerName: user ? user.username : "Desconocido",
       };
     });
 
