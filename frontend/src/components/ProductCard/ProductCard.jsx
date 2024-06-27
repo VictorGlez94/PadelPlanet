@@ -145,7 +145,7 @@ const ProductCard = ({ product, category }) => {
           maxHeight: 40,
         }}
         avatar={
-          <Avatar sx={{ bgcolor: "#04233A" }}>{product.name.charAt(0)}</Avatar>
+          <Avatar sx={{ bgcolor: "#04233A" }}>{product.sellerName.charAt(0).toUpperCase()}</Avatar>
         }
         title={
           <Typography variant="body2" fontWeight="bold" noWrap>
