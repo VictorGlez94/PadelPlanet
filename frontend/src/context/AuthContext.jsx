@@ -24,7 +24,8 @@ export const AuthProvider = ({ children }) => {
         setToken(response.data.result.token);
         setIsAuthenticated(true);
         localStorage.setItem("token", response.data.result.token);
-        setUserId(response.data.result.userId);
+        setUserId(parseInt(response.data.result.userId));
+        localStorage.setItem('userId', parseInt(response.data.result.userId))
         return true;
       }
     } catch (error) {

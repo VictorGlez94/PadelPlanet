@@ -21,7 +21,7 @@ import SmsIcon from "@mui/icons-material/Sms";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { CheckBox }  from "@mui/icons-material";
+import { CheckBox } from "@mui/icons-material";
 import EditIcon from '@mui/icons-material/Edit';
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
@@ -30,8 +30,12 @@ import { api } from "../../services/config";
 const ProductPage = () => {
   const { productId } = useParams();
   const { addToCart, toggleFavorite, favorites } = useCart();
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, userId } = useAuth();
   const [productInfo, setProductInfo] = useState([]);
+  const [editedInfo, setEditedInfo] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [statuses, setStatuses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -43,10 +47,16 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [productResponse] = await Promise.all([
-          await api.get(`product/${productId}`, {headers: headers}),
+        const [productResponse, categoriesResponse, usersResponse, statusResonse] = await Promise.all([
+          await api.get(`product/${productId}`, { headers: headers }),
+          await api.get("productcategory/", { headers: headers }),
+          await api.get("user/", { headers: headers }),
+          await api.get("productstatus/", { headers: headers }),
         ]);
         setProductInfo(productResponse.data);
+        setUsers(usersResponse.data);
+        setCategories(categoriesResponse.data)
+        setStatuses(statusResonse.data)
         setLoading(false);
       } catch (error) {
         console.error("Ha habido un error buscando el producto", error);
@@ -58,6 +68,12 @@ const ProductPage = () => {
     fetchData();
   }, []);
 
+  const seller = users.find(user => user.id === productInfo.seller_id);
+  const sellerName = seller ? seller.username : "Desconocido";
+  const category = categories.find(category => category.id === productInfo.category_id);
+  const categoryName = category ? category.name : "Desconocido";
+  const status = statuses.find(status => status.id === productInfo.product_status_id);
+  const statusName = status ? status.status : "Desconocido";
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedProduct, setEditedProduct] = useState({ ...productInfo });
@@ -130,10 +146,21 @@ const ProductPage = () => {
 
   const handleEditClick = () => {
     setIsEditing(true);
+    setEditedProduct({ ...productInfo });
   };
 
-  const handleSaveClick = () => {
-    setIsEditing(false);
+  const handleSaveClick = async () => {
+    try {
+      const [editedResponse] = await Promise.all([
+        await api.put(`product/${productId}`, editedProduct, { headers: headers })
+      ]);
+      setEditedInfo(editedResponse);
+        console.log(editedInfo)
+        setIsEditing(false);
+    } catch (error) {
+      console.error("Error al guardar el producto", error);
+      setError("Error al guardar el producto");
+    }
   };
 
   const handleInputChange = (e) => {
@@ -144,9 +171,9 @@ const ProductPage = () => {
     }));
   };
 
-  const isOwner = isAuthenticated && user.id === productInfo.seller_id;
+  const isOwner = isAuthenticated && userId === productInfo.seller_id;
 
-    return (
+  return (
     <>
       <BreadcrumbsComponent />
       <Box
@@ -176,7 +203,7 @@ const ProductPage = () => {
           />
           <CardContent sx={{ width: "400px" }}>
             <Typography variant="h4" color="#04233A">
-              <strong>Vendido por:</strong> {productInfo.seller_id}
+              <strong>Vendido por:</strong> {sellerName}
             </Typography>
             <Typography variant="body1" color="#04233A">
               <strong>Fecha de Publicación:</strong> {formatDate(productInfo.created_at)}
@@ -257,7 +284,6 @@ const ProductPage = () => {
                 <ShoppingCartOutlinedIcon sx={{ color: "#04233A" }} />
               </IconButton>
             </Box>
-            
           </CardContent>
         </Box>
         <Box
@@ -324,7 +350,7 @@ const ProductPage = () => {
               >
                 <CheckBox />
                 <Typography variant="h6">
-                  <strong>Categoría:</strong> {productInfo.category}
+                  <strong>Categoría:</strong> {categoryName}
                 </Typography>
               </Box>
               <Box
@@ -337,8 +363,8 @@ const ProductPage = () => {
               >
                 <CheckBox />
                 <Typography variant="h6">
-                  <strong>Estado del producto:</strong>{" "}
-                  {productInfo.product_status_id}
+                  <strong>Estado del producto: </strong>
+                   {statusName}
                 </Typography>
               </Box>
             </Box>
@@ -375,7 +401,7 @@ const ProductPage = () => {
               </Typography>
             </Box>
           </CardContent>
-          {isAuthenticated && user.id === productInfo.seller_id && (
+          {isOwner && (
               <Button
                 variant="contained"
                 sx={{
@@ -400,7 +426,7 @@ const ProductPage = () => {
                 <TextField
                   name="name"
                   label="Nombre del producto"
-                  value={editedProduct.name}
+                  value={editedProduct.name || ""}
                   onChange={handleInputChange}
                   fullWidth
                   margin="normal"
@@ -409,31 +435,31 @@ const ProductPage = () => {
                   name="price"
                   label="Precio"
                   type="number"
-                  value={editedProduct.price}
+                  value={editedProduct.price || ""}
                   onChange={handleInputChange}
                   fullWidth
                   margin="normal"
                 />
-                                <TextField
+                <TextField
                   name="brand"
                   label="Marca"
-                  value={editedProduct.brand}
+                  value={editedProduct.brand || ""}
                   onChange={handleInputChange}
                   fullWidth
                   margin="normal"
                 />
-                                <TextField
+                <TextField
                   name="category"
                   label="Categoría"
-                  value={editedProduct.category}
+                  value={editedProduct.category || ""}
                   onChange={handleInputChange}
                   fullWidth
                   margin="normal"
                 />
-                                <TextField
+                <TextField
                   name="product_status"
                   label="Estado del producto"
-                  value={editedProduct.product_status_id}
+                  value={editedProduct.product_status_id || ""}
                   onChange={handleInputChange}
                   fullWidth
                   margin="normal"
@@ -441,7 +467,7 @@ const ProductPage = () => {
                 <TextField
                   name="description"
                   label="Descripción"
-                  value={editedProduct.description}
+                  value={editedProduct.description || ""}
                   onChange={handleInputChange}
                   fullWidth
                   margin="normal"

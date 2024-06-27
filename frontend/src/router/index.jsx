@@ -100,7 +100,7 @@ const router = createBrowserRouter([
         element: <CategoryPage />,
       },
       {
-        path: "/producto/:productName",
+        path: "/producto/:productId",
         element: <ProductPage />,
       },
       { path: '/cambiar-password', 

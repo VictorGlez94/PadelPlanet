@@ -12,7 +12,8 @@ function Favorites() {
   const [likes, setLikes] = useState([]);
   const [userFavorites, setUserFavorites] = useState([]);
 
-  const { isAuthenticated, userId } = useAuth(); 
+  const { userId } = useAuth();
+  console.log(userId) 
 
   const headers = {
     "Content-Type": "application/json",
@@ -26,11 +27,11 @@ function Favorites() {
           await api.get("like/", { headers: headers }),
         ]);
         setLikes(likesResponse.data);
-        console.log(likesResponse.data)
         setLoading(false);
 
-        if (isAuthenticated && likes.length > 0) {
+        if (likes.length > 0) {
           const filteredFavorites = likes.filter((like) => like.user_id === userId);
+          console.log(filteredFavorites)
           setUserFavorites(filteredFavorites);
         }
       } catch (error) {
