@@ -76,7 +76,7 @@ const Cart = () => {
                       {item.name}
                     </Typography>
                     <Typography variant="subtitle2" color="text.secondary">
-                      {`${item.price.toFixed(2)} €`}
+                      {`${item.price} €`}
                     </Typography>
                   </CardContent>
                   <CardActions>

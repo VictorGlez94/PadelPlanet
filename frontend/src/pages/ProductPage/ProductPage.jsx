@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Box,
@@ -11,7 +12,6 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
-import productsData from "../../assets/db/products.json";
 import BreadcrumbsComponent from "../../components/Breadcrumbs";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -25,24 +25,44 @@ import { CheckBox }  from "@mui/icons-material";
 import EditIcon from '@mui/icons-material/Edit';
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
+import { api } from "../../services/config";
 
 const ProductPage = () => {
-  const { productName } = useParams();
+  const { productId } = useParams();
   const { addToCart, toggleFavorite, favorites } = useCart();
   const { isAuthenticated, user } = useAuth();
+  const [productInfo, setProductInfo] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const formatProductName = (name) => {
-    return name.toLowerCase().replace(/\s+/g, "-");
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: localStorage.getItem("token"),
   };
 
-  const product = productsData.find(
-    (p) => formatProductName(p.name) === productName
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productResponse] = await Promise.all([
+          await api.get(`product/${productId}`, {headers: headers}),
+        ]);
+        setProductInfo(productResponse.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Ha habido un error buscando el producto", error);
+        setError("Ha habido un error buscando el producto");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editedProduct, setEditedProduct] = useState({ ...product });
+  const [editedProduct, setEditedProduct] = useState({ ...productInfo });
 
-  if (!product) {
+  if (!productInfo) {
     return (
       <Box sx={{ textAlign: "center", mt: 5 }}>
         <Typography variant="h4">Producto no encontrado</Typography>
@@ -59,16 +79,16 @@ const ProductPage = () => {
   }
 
   const [isFavorite, setIsFavorite] = useState(() =>
-    favorites.some((item) => item.id === product.id)
+    favorites.some((item) => item.id === productInfo.id)
   );
 
   const handleToggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    toggleFavorite(product);
+    toggleFavorite(productInfo);
   };
 
   const handleAddToCart = () => {
-    addToCart(product);
+    addToCart(productInfo);
   };
 
   const handleShare = (network) => {
@@ -97,13 +117,13 @@ const ProductPage = () => {
   const shareOnTwitter = () => {
     const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
       window.location.href
-    )}&text=${encodeURIComponent(product.name)}`;
+    )}&text=${encodeURIComponent(productInfo.name)}`;
     window.open(url, "_blank");
   };
 
   const shareOnWhatsApp = () => {
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(
-      `${product.name} - ${window.location.href}`
+      `${productInfo.name} - ${window.location.href}`
     )}`;
     window.open(url, "_blank");
   };
@@ -124,7 +144,7 @@ const ProductPage = () => {
     }));
   };
 
-  const isOwner = isAuthenticated && user.id === product.seller_id;
+  const isOwner = isAuthenticated && user.id === productInfo.seller_id;
 
     return (
     <>
@@ -150,16 +170,16 @@ const ProductPage = () => {
         >
           <CardMedia
             component="img"
-            image={product.image_url}
-            alt={product.name}
+            image={productInfo.image_url}
+            alt={productInfo.name}
             sx={{ maxHeight: "400px", maxWidth: "400px" }}
           />
           <CardContent sx={{ width: "400px" }}>
             <Typography variant="h4" color="#04233A">
-              <strong>Vendido por:</strong> {product.seller_id}
+              <strong>Vendido por:</strong> {productInfo.seller_id}
             </Typography>
             <Typography variant="body1" color="#04233A">
-              <strong>Fecha de Publicación:</strong> {formatDate(product.created_at)}
+              <strong>Fecha de Publicación:</strong> {formatDate(productInfo.created_at)}
             </Typography>
             <Box
               sx={{
@@ -258,7 +278,7 @@ const ProductPage = () => {
               color: "#04233A",
             }}
           >
-            {product.name}
+            {productInfo.name}
           </Typography>
           <Typography
             variant="h5"
@@ -270,7 +290,7 @@ const ProductPage = () => {
               color: "#04233A",
             }}
           >
-            <strong>{product.price.toFixed(2)} €</strong>
+            <strong>{productInfo.price} €</strong>
           </Typography>
           <CardContent>
             <Box
@@ -291,7 +311,7 @@ const ProductPage = () => {
               >
                 <CheckBox />
                 <Typography variant="h6">
-                  <strong>Marca:</strong> {product.brand}
+                  <strong>Marca:</strong> {productInfo.brand}
                 </Typography>
               </Box>
               <Box
@@ -304,7 +324,7 @@ const ProductPage = () => {
               >
                 <CheckBox />
                 <Typography variant="h6">
-                  <strong>Categoría:</strong> {product.category}
+                  <strong>Categoría:</strong> {productInfo.category}
                 </Typography>
               </Box>
               <Box
@@ -318,7 +338,7 @@ const ProductPage = () => {
                 <CheckBox />
                 <Typography variant="h6">
                   <strong>Estado del producto:</strong>{" "}
-                  {product.product_status_id}
+                  {productInfo.product_status_id}
                 </Typography>
               </Box>
             </Box>
@@ -351,11 +371,11 @@ const ProductPage = () => {
                   color: "#04233A",
                 }}
               >
-                {product.description}
+                {productInfo.description}
               </Typography>
             </Box>
           </CardContent>
-          {isAuthenticated && user.id === product.seller_id && (
+          {isAuthenticated && user.id === productInfo.seller_id && (
               <Button
                 variant="contained"
                 sx={{
