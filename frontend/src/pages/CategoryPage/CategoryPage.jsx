@@ -74,6 +74,12 @@ const CategoryPage = () => {
     (product) => product.categoryName === capitalizeFirstLetter(categoryName)
   );
 
+  const sortedProducts = filteredProducts.sort((a, b) => {
+    const dateA = new Date(a.created_at);
+    const dateB = new Date(b.created_at);
+    return dateB - dateA;
+  });
+
   return (
     <>
       <BreadcrumbsComponent />
@@ -88,7 +94,7 @@ const CategoryPage = () => {
           {capitalizeFirstLetter(categoryName)} a la venta
         </Typography>
         <SearchBar onSearchChange={setSearchTerm} />
-        <ProductList products={filteredProducts} />
+        <ProductList products={sortedProducts} />
       </Container>
     </>
   );
