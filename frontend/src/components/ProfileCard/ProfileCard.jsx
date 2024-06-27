@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -32,7 +33,9 @@ function ProfileCard({ data, onSave }) {
   const [uploadedFoto, setUploadedFoto] = useState(foto);
   const [editMode, setEditMode] = useState(false);
   const [editedData, setEditedData] = useState({
+    usuario: usuario || "",
     nombre: nombre || "",
+    fechaNacimiento: fechaNacimiento || "",
     direccion: direccion || "",
     telefono: telefono || "",
     genero: genero || "",
@@ -47,7 +50,6 @@ function ProfileCard({ data, onSave }) {
   const handleUploadComplete = (url) => {
     setUploadedFoto(url);
     setEditedData({ ...editedData, foto: url });
-    console.log(2, uploadedFoto);
   };
 
   const handleEdit = () => {
@@ -59,6 +61,7 @@ function ProfileCard({ data, onSave }) {
     setEditedData({
       usuario: usuario,
       nombre: nombre,
+      fechaNacimiento: fechaNacimiento,
       direccion: direccion,
       telefono: telefono,
       genero: genero,
@@ -68,7 +71,7 @@ function ProfileCard({ data, onSave }) {
   };
 
   const handleSave = () => {
-    console.log(`Datos actualizado: ${JSON.stringify(editedData)}`);
+    console.log(`Datos actualizados: ${JSON.stringify(editedData)}`);
 
     api
       .put(
@@ -86,10 +89,8 @@ function ProfileCard({ data, onSave }) {
         },
         { headers: headers }
       )
-      // eslint-disable-next-line no-unused-vars
       .then((response) => {
         onSave({ ...editedData, foto: uploadedFoto });
-        console.log(editedData);
         setEditMode(false);
       })
       .catch((error) => {
@@ -107,6 +108,14 @@ function ProfileCard({ data, onSave }) {
   const handleGeneroChange = (event) => {
     setEditedData({ ...editedData, genero: event.target.value });
   };
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
 
   return (
     <Card
@@ -162,7 +171,7 @@ function ProfileCard({ data, onSave }) {
         {editMode ? (
           <>
             <TextField
-              name="user"
+              name="usuario"
               label="Usuario"
               value={editedData.usuario}
               onChange={handleChange}
@@ -287,7 +296,7 @@ function ProfileCard({ data, onSave }) {
               color="#04233A"
               sx={{ marginBottom: 1 }}
             >
-              <strong>Fecha de Nacimiento:</strong> {fechaNacimiento}
+              <strong>Fecha de Nacimiento:</strong> {formatDate(fechaNacimiento)}
             </Typography>
             <Typography
               variant="body1"
@@ -334,7 +343,6 @@ function ProfileCard({ data, onSave }) {
               </Button>
               <Button
                 variant="contained"
-                onClick={handleEdit}
                 sx={{ marginTop: 2, bgcolor: "#04233A" }}
               >
                 <Link

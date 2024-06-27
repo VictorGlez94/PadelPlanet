@@ -18,7 +18,7 @@ import { useAuth } from '../../context/AuthContext';
 export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
-  const { login, isAuthenticated } = useAuth();
+  const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,10 +27,8 @@ export default function Login() {
     const password = data.get("password");
 
     try {
-      await login(email, password);
-      console.log(isAuthenticated, "after authentication");
-
-      if (isAuthenticated) {
+      const success = await login(email, password);
+      if (success) {
         navigate('/perfil');
       } else {
         setError('Email o contraseña incorrectos');

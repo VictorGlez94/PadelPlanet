@@ -10,31 +10,28 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 
-  // Function to log in
-  const login = (email, password) => {
+  // Function to login
+  const login = async (email, password) => {
     setIsAuthenticated(false);
-    console.log(email, password);
-    api
-      .post("auth/login", {
+    try {
+      const response = await api.post("auth/login", {
         password: password,
         email: email,
-      })
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.result.token) {
-          console.log("Logged in successfully");
-          setToken(response.data.result.token);
-          setIsAuthenticated(true);
-          localStorage.setItem("token", response.data.result.token);
-          setUser({ id: response.data.result.id, name: response.data.result.name });
-        }
-      })
-      .catch((error) => {
-        console.error("User is not authenticated", error);
       });
+      if (response.data.result.token) {
+        setToken(response.data.result.token);
+        setIsAuthenticated(true);
+        localStorage.setItem("token", response.data.result.token);
+        setUser({ id: response.data.result.id, name: response.data.result.name });
+        return true;
+      }
+    } catch (error) {
+      console.error("User is not authenticated", error);
+      return false;
+    }
   };
 
-  // Function to log out
+  // Function to logout
   const logout = () => {
     setIsAuthenticated(false);
     setToken("");
