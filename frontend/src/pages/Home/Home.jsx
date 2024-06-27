@@ -98,7 +98,7 @@ function Home() {
         marginTop={"30px"}
         marginBottom={"30px"}
       >
-        ¿Qué quieres encontrar?
+        ¿Qué quieres encontrar
       </Typography>
       <SearchBar onSearchChange={setSearchTerm} />
       <CategoryList />
