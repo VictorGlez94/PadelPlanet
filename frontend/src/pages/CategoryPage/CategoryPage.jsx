@@ -25,8 +25,8 @@ const CategoryPage = () => {
     const fetchData = async () => {
       try {
         const [productsResponse, categoriesResponse, usersResponse] = await Promise.all([
-          await api.get("product/", { headers }),
-          await api.get("productcategory/", { headers }),
+          await api.get("product/", { headers: headers }),
+          await api.get("productcategory/", { headers: headers }),
           await api.get("user/", { headers: headers }),
         ]);
         setProducts(productsResponse.data);

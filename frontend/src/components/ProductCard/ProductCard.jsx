@@ -17,6 +17,7 @@ import { formatDistanceToNowStrict } from "date-fns";
 import { es } from "date-fns/locale";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
+import { api } from "../../services/config"; 
 
 const ProductCard = ({ product, category }) => {
   const timeAgo = formatDistanceToNowStrict(new Date(product.created_at), {
@@ -30,6 +31,11 @@ const ProductCard = ({ product, category }) => {
     favorites.some((item) => item.id === product.id)
   );
 
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: localStorage.getItem("token"),
+  };
+
   useEffect(() => {
     setIsFavorite(favorites.some((item) => item.id === product.id));
   }, [favorites, product.id]);
@@ -41,9 +47,25 @@ const ProductCard = ({ product, category }) => {
   };
 
   const handleToggleFavorite = () => {
-    if (!isOwner) {
+    if (isAuthenticated) {
       setIsFavorite(!isFavorite);
+      sendLikeRequest(product.id, user.id);
       toggleFavorite(product);
+    } else {
+      console.log("Debe iniciar sesión para dar like.");
+    }
+  };
+
+  const sendLikeRequest = async (productId, userId) => {
+    try {
+      const response = await api.post(
+        "/like",
+        { product_id: productId, user_id: userId },
+        { headers: headers }
+      );
+      console.log("Like enviado exitosamente:", response.data);
+    } catch (error) {
+      console.error("Error al enviar el like:", error);
     }
   };
 
@@ -52,7 +74,8 @@ const ProductCard = ({ product, category }) => {
   }
 
   const isOwner = isAuthenticated && product.seller_id === user.id;
-
+  console.log(isAuthenticated, product.seller_id)
+  console.log(isOwner)
   return (
     <Card
       sx={{
@@ -111,7 +134,7 @@ const ProductCard = ({ product, category }) => {
           padding="6px"
           borderRadius="15px"
         >
-          {`${product.price.toFixed(2)} €`}
+          {`${product.price} €`}
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "center" }}>

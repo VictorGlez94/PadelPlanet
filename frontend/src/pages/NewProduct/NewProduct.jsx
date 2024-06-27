@@ -73,8 +73,7 @@ const NewProduct = () => {
       
       const categoryId = categories.find((cat) => cat.name === categoria)?.id;
       const statusId = statuses.find((stat) => stat.status === status)?.id;
-
-      console.log(2, statuses, statusId, status)
+      
       const formData = {
         name,
         brand,

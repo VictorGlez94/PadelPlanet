@@ -1,15 +1,44 @@
-// Favorites.jsx
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from "react";
 import ProductList from "../../components/ProductList/ProductList";
 import { Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useCart } from "../../context/CartContext";
+import { api } from "../../services/config";
 
 function Favorites() {
-  const { favorites } = useCart();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [likes, setLikes] = useState([]);
+  const [user, setUser] = useState([]);
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: localStorage.getItem("token"),
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [likesResponse, userResponse] = await Promise.all([
+          await api.get("like/getMyLikes/", { headers: headers }),
+          await api.get("user/profile",{headers: headers}),
+        ]);
+        setLikes(likesResponse.data);
+        setUser(userResponse.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Ha habido un error buscando los productos favoritos", error);
+        setError("Ha habido un error buscando los productos favoritos");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1, ml: "80px", mr: "80px", mb: "40px" }}>
-      {favorites.length === 0 ? (
+      {likes.length === 0 ? (
         <Box sx={{ textAlign: "center" }}>
           <Typography variant="h4">No tienes productos favoritos</Typography>
           <Button
@@ -29,7 +58,7 @@ function Favorites() {
       ) : (
         <Box sx={{ textAlign: "center" }}>
         <Typography variant="h4">Tus productos favoritos:</Typography>
-        <ProductList products={favorites} />
+        <ProductList products={likes} />
         </Box>
       )}
     </Box>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState } from "react";
 import { api } from "../services/config"
@@ -22,7 +23,7 @@ export const AuthProvider = ({ children }) => {
         setToken(response.data.result.token);
         setIsAuthenticated(true);
         localStorage.setItem("token", response.data.result.token);
-        setUser({ id: response.data.result.id, name: response.data.result.name });
+        setUser(response.data.result.user);
         return true;
       }
     } catch (error) {
@@ -35,12 +36,11 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setIsAuthenticated(false);
     setToken("");
-    setUser(null);
     localStorage.removeItem("token");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, token, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
