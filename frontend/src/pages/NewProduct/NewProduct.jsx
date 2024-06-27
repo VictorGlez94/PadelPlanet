@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { FormControl, InputLabel, InputAdornment } from "@mui/material";
 import UploadWidget from "../../components/UploadWidget";
 import { api } from "../../services/config";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Form = styled("form")(() => ({
   display: "flex",
@@ -33,7 +33,7 @@ const NewProduct = () => {
   const [categories, setCategories] = useState([]);
   const [statuses, setStatuses] = useState([]);
 
-  const [sellerId, setSellerId] = useState("");
+  const navigate = useNavigate();
 
     const headers = {
       "Content-Type": "application/json",
@@ -55,9 +55,6 @@ const NewProduct = () => {
     };
     fetchCategoriesAndStatuses();
     
-    const userId = localStorage.getItem("userId"); 
-    
-    setSellerId(userId);
   }, []);
   
   console.log(1 , categories, statuses)
@@ -96,7 +93,7 @@ const NewProduct = () => {
 
       console.log("Producto creado:", response.data);
       alert('Producto creado correctamente');
-      Navigate('/');
+      navigate('/');
     } catch (error) {
       console.error("Error al crear el producto", error);
       alert('Error al crear el producto');
