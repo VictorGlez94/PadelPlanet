@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
+  
 
   // Function to login
   const login = async (email, password) => {
@@ -24,6 +25,7 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         localStorage.setItem("token", response.data.result.token);
         setUser(response.data.result.user);
+        console.log(response)
         return true;
       }
     } catch (error) {

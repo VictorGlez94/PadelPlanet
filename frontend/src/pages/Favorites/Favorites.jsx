@@ -4,12 +4,14 @@ import ProductList from "../../components/ProductList/ProductList";
 import { Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { api } from "../../services/config";
+import { useAuth } from "../../context/AuthContext";
 
 function Favorites() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [likes, setLikes] = useState([]);
-  const [user, setUser] = useState([]);
+
+  const { isAuthenticated, user } = useAuth(); 
 
   const headers = {
     "Content-Type": "application/json",
@@ -19,12 +21,10 @@ function Favorites() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [likesResponse, userResponse] = await Promise.all([
-          await api.get("like/getMyLikes/", { headers: headers }),
-          await api.get("user/profile",{headers: headers}),
+        const [likesResponse] = await Promise.all([
+          await api.get("like/", { headers: headers }),
         ]);
         setLikes(likesResponse.data);
-        setUser(userResponse.data);
         setLoading(false);
       } catch (error) {
         console.error("Ha habido un error buscando los productos favoritos", error);
@@ -35,6 +35,8 @@ function Favorites() {
 
     fetchData();
   }, []);
+
+  const userFavorites = likes.filter((like) => like.user_id === user.id);
 
   return (
     <Box sx={{ flexGrow: 1, ml: "80px", mr: "80px", mb: "40px" }}>
@@ -58,7 +60,7 @@ function Favorites() {
       ) : (
         <Box sx={{ textAlign: "center" }}>
         <Typography variant="h4">Tus productos favoritos:</Typography>
-        <ProductList products={likes} />
+        <ProductList products={userFavorites} />
         </Box>
       )}
     </Box>
