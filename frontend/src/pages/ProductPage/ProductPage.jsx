@@ -152,14 +152,14 @@ const ProductPage = () => {
   const handleSaveClick = async () => {
     try {
       const [editedResponse] = await Promise.all([
-        await api.put(`product/${productId}`, editedProduct, { headers: headers })
+        await api.put(`product/${productId}`, editedProduct, { headers })
       ]);
+      console.log(editedResponse)
       setEditedInfo(editedResponse);
-        console.log(editedInfo)
-        setIsEditing(false);
+      setIsEditing(false);
     } catch (error) {
-      console.error("Error al guardar el producto", error);
-      setError("Error al guardar el producto");
+      console.error("Error saving product", error);
+      setError("Error saving product");
     }
   };
 

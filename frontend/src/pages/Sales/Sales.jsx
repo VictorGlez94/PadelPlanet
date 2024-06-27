@@ -1,16 +1,63 @@
-// Sales.jsx
-import ProductList from "../../components/ProductList/ProductList";
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import productsData from '../../assets/db/products.json'; 
+import { api } from '../../services/config';
+import ProductList from '../../components/ProductList/ProductList';
 
 function Sales() {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, userId } = useAuth();
+  const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [userProductsForSale, setUserProductsForSale] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const userProductsForSale = productsData.filter(
-    (product) => isAuthenticated && product.seller_id === user.id
-  );
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: localStorage.getItem("token"),
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productsResponse, usersResponse] = await Promise.all([
+          api.get("product/", { headers }),
+          api.get("user/",{headers: headers}),
+        ]);
+        setProducts(productsResponse.data);
+        setUsers(usersResponse.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Ha habido un error buscando los productos", error);
+        setError("Ha habido un error buscando los productos");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const joinDataForSales = (userProducts, users) => {
+    return userProducts.map((product) => {
+      const user = users.find((user) => user.id === product.seller_id);
+      return {
+        ...product,
+        sellerName: user ? user.username : "Desconocido",
+      };
+    });
+  };
+
+  useEffect(() => {
+    if (products.length > 0) {
+      const filteredUserProductsForSale = products.filter(
+        (product) => isAuthenticated && product.seller_id === userId
+      );
+      const updatedUserProductsForSale = joinDataForSales(filteredUserProductsForSale, users);
+      setUserProductsForSale(updatedUserProductsForSale);
+    }
+  }, [products, isAuthenticated, userId]);
 
   return (
     <Box sx={{ flexGrow: 1, ml: "80px", mr: "80px", mb: "40px" }}>

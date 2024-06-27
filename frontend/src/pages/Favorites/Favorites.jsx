@@ -13,7 +13,6 @@ function Favorites() {
   const [userFavorites, setUserFavorites] = useState([]);
 
   const { userId } = useAuth();
-  console.log(userId) 
 
   const headers = {
     "Content-Type": "application/json",
@@ -27,13 +26,12 @@ function Favorites() {
           await api.get("like/", { headers: headers }),
         ]);
         setLikes(likesResponse.data);
+        console.log(likes)
+        const filteredFavorites = likes.filter((like) => like.user_id === 8);
+        setUserFavorites(filteredFavorites);
+        console.log(filteredFavorites)
         setLoading(false);
 
-        if (likes.length > 0) {
-          const filteredFavorites = likes.filter((like) => like.user_id === userId);
-          console.log(filteredFavorites)
-          setUserFavorites(filteredFavorites);
-        }
       } catch (error) {
         console.error("Ha habido un error buscando los productos favoritos", error);
         setError("Ha habido un error buscando los productos favoritos");

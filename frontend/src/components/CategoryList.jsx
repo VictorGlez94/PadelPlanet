@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import categoriesData from "../assets/db/categories.json";
 
 const CategoryList = () => {
+
+  
   return (
     <Grid container spacing={2} marginTop='20px' marginBottom='60px'>
       {categoriesData.map((category) => (

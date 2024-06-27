@@ -16,7 +16,7 @@ const {
 router.get("/", debugging, getAllProducts);
 router.get("/:id", debugging, checkAuth, checkAdmin, getOneProduct);
 router.post("/", debugging, checkAuth, checkAdmin, createProduct);
-router.put("/:id", debugging, checkAuth, updateProduct);
+router.put("/:id", debugging, updateProduct);
 router.delete("/:id", debugging, checkAuth, checkAdmin, deleteProduct);
 
 module.exports = router;
