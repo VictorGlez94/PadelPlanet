@@ -47,10 +47,6 @@ const ProductCard = ({ product, category }) => {
     }
   };
 
-  const formatProductName = (name) => {
-    return name.toLowerCase().replace(/\s+/g, "-");
-  };
-
   if (category && product.category !== category) {
     return null;
   }
@@ -89,7 +85,7 @@ const ProductCard = ({ product, category }) => {
           {product.name}
         </Typography>
       </CardContent>
-      <Link to={`/producto/${formatProductName(product.name)}`} style={{ textDecoration: "none" }}>
+      <Link to={`/producto/${product.id}`} style={{ textDecoration: "none" }}>
         <CardMedia
           component="img"
           image={product.image_url}
