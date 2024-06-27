@@ -25,7 +25,7 @@ const ProductCard = ({ product, category }) => {
     locale: es,
   });
   const { addToCart, toggleFavorite, favorites } = useCart();
-  const { isAuthenticated, user } = useAuth(); 
+  const { isAuthenticated, userId } = useAuth(); 
 
   const [isFavorite, setIsFavorite] = useState(() =>
     favorites.some((item) => item.id === product.id)
@@ -49,7 +49,7 @@ const ProductCard = ({ product, category }) => {
   const handleToggleFavorite = () => {
     if (isAuthenticated) {
       setIsFavorite(!isFavorite);
-      sendLikeRequest(product.id, user.id);
+      sendLikeRequest(product.id, userId);
       toggleFavorite(product);
     } else {
       console.log("Debe iniciar sesión para dar like.");
@@ -73,9 +73,7 @@ const ProductCard = ({ product, category }) => {
     return null;
   }
 
-  const isOwner = isAuthenticated && product.seller_id === user.id;
-  console.log(isAuthenticated, product.seller_id)
-  console.log(isOwner)
+  const isOwner = isAuthenticated && product.seller_id === userId;
   return (
     <Card
       sx={{

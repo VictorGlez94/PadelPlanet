@@ -10,8 +10,9 @@ function Favorites() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [likes, setLikes] = useState([]);
+  const [userFavorites, setUserFavorites] = useState([]);
 
-  const { isAuthenticated, user } = useAuth(); 
+  const { isAuthenticated, userId } = useAuth(); 
 
   const headers = {
     "Content-Type": "application/json",
@@ -25,7 +26,13 @@ function Favorites() {
           await api.get("like/", { headers: headers }),
         ]);
         setLikes(likesResponse.data);
+        console.log(likesResponse.data)
         setLoading(false);
+
+        if (isAuthenticated && likes.length > 0) {
+          const filteredFavorites = likes.filter((like) => like.user_id === userId);
+          setUserFavorites(filteredFavorites);
+        }
       } catch (error) {
         console.error("Ha habido un error buscando los productos favoritos", error);
         setError("Ha habido un error buscando los productos favoritos");
@@ -36,7 +43,9 @@ function Favorites() {
     fetchData();
   }, []);
 
-  const userFavorites = likes.filter((like) => like.user_id === user.id);
+
+
+  
 
   return (
     <Box sx={{ flexGrow: 1, ml: "80px", mr: "80px", mb: "40px" }}>
