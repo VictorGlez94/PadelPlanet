@@ -69,7 +69,13 @@ function Favorites() {
   const favoriteProducts = getFavoriteProductsDetails();
   const favoriteProductsJoined = joinDataForSales(favoriteProducts, users);
 
-  console.log(favoriteProductsJoined)
+  // Función para eliminar productos duplicados por id
+  const uniqueFavoriteProducts = Array.from(new Set(favoriteProductsJoined.map((product) => product.id)))
+    .map((id) => {
+      return favoriteProductsJoined.find((product) => product.id === id);
+    });
+
+  console.log(uniqueFavoriteProducts);
 
   return (
     <Box sx={{ flexGrow: 1, ml: "80px", mr: "80px", mb: "40px" }}>
@@ -93,7 +99,7 @@ function Favorites() {
       ) : (
         <Box sx={{ textAlign: "center" }}>
           <Typography variant="h4">Tus productos favoritos:</Typography>
-          <ProductList products={favoriteProductsJoined} />
+          <ProductList products={uniqueFavoriteProducts} />
         </Box>
       )}
     </Box>

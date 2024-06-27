@@ -48,8 +48,12 @@ const ProductCard = ({ product, category }) => {
 
   const handleToggleFavorite = () => {
     if (isAuthenticated) {
+      if (isFavorite) {
+        deleteLikeRequest(product.id);
+      } else {
+        sendLikeRequest(product.id, userId);
+      }
       setIsFavorite(!isFavorite);
-      sendLikeRequest(product.id, userId);
       toggleFavorite(product);
     } else {
       console.log("Debe iniciar sesión para dar like.");
@@ -66,6 +70,17 @@ const ProductCard = ({ product, category }) => {
       console.log("Like enviado exitosamente:", response.data);
     } catch (error) {
       console.error("Error al enviar el like:", error);
+    }
+  };
+
+  const deleteLikeRequest = async (productId) => {
+    try {
+      const response = await api.delete(`/like/${productId}`, {
+        headers: headers,
+      });
+      console.log("Like eliminado exitosamente:", response.data);
+    } catch (error) {
+      console.error("Error al eliminar el like:", error);
     }
   };
 
