@@ -70,7 +70,7 @@ function Payment() {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant="h4" marginTop={'10px'} marginBottom={'10px'}>Elige tu método de pago: </Typography>
-      <Typography marginBottom={'10px'}>El importe total de tu compra es de <strong>{total.toFixed(2)} €</strong> </Typography>
+      <Typography marginBottom={'40px'}>El importe total de tu compra es de <strong>{total} €</strong> </Typography>
       {clientSecret && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
           <CheckoutForm />
